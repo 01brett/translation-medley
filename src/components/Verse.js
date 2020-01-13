@@ -6,9 +6,7 @@ const Verse = ({ verse }) => {
   return(
     <>
       <span className="verse">
-        <span className="verse-number">
-          {verse.verse}
-        </span>
+        <span className="verse-number">{verse.verse}</span>
         {' '}{verse.text}{' '}
       </span>
     </>

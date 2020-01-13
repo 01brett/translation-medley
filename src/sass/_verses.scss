@@ -1,4 +1,12 @@
+.verse {
+  &:hover {
+    cursor: pointer;
+    background-color: yellow;
+  }
+}
+
 .verse-number {
+  color: $black700;
   font-weight: 900;
   font-size: 83%;
   vertical-align: top;

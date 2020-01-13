@@ -10,9 +10,9 @@ const Verses = () => {
   return(
     <>
       <p className="verses">
-      {verses.map((verse, index) => (
-        <Verse key={index + verse.verse} verse={verse}/>
-      ))}
+        {verses.map((verse, index) => (
+          <Verse key={index + verse.verse} verse={verse}/>
+        ))}
       </p>
     </>
   );

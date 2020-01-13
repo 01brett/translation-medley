@@ -8,7 +8,10 @@ const initState = {
   isFetching: false,
   error: '',
   passage: {
-    translation: 'KJV',
+    translation: {
+      longName: 'King James Version',
+      shortName: 'KJV'
+    },
     book: '1 John',
     chapter: '1',
     verses: [
@@ -67,7 +70,17 @@ const initState = {
       book: '1 John',
       chapter: '2'
     }
-  }
+  },
+  translations: [
+    {
+      longName: 'King James Version',
+      shortName: 'KJV'
+    },
+    {
+      longName: 'English Standard Version',
+      shortName: 'ESV'
+    }
+  ]
 }
 
 export default (state = initState, action) => {
