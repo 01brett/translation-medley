@@ -57,20 +57,6 @@ const initState = {
       }
     ]
   },
-  locator: {
-    current: {
-      book: '1 John',
-      chapter: '1'
-    },
-    previous: {
-      book: '2 Peter',
-      chapter: '3'
-    },
-    next: {
-      book: '1 John',
-      chapter: '2'
-    }
-  },
   translations: [
     {
       longName: 'King James Version',
