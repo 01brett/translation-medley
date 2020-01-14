@@ -1,13 +1,25 @@
+.locator {
+  display: flex;
+  justify-content: space-between;
+}
+
 .verse {
+  z-index: 2;
   &:hover {
     cursor: pointer;
-    background-color: yellow;
+    background-color: $yellow;
+    box-shadow: 0 0 0 $xs $yellow;
+  }
+  &:active, &:focus, &.active {
+    background-color: $black;
+    color: $white;
+    box-shadow: 0 0 0 $xs $black;
   }
 }
 
 .verse-number {
-  color: $black700;
   font-weight: 900;
-  font-size: 83%;
+  font-size: 80%;
   vertical-align: top;
+  color: $grey1;
 }

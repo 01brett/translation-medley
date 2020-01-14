@@ -1,0 +1,36 @@
+@import 'resets';
+
+// Colors
+$black: #212121;
+$grey1: #667;
+$white: #fff;
+$yellow: rgba(255,255,0,.85);
+// Ratios
+$xs: .25rem;
+$sm: .5rem;
+$md: 1rem;
+$lg: 1.5rem;
+$xl: 2rem;
+
+* {
+  box-sizing: border-box;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: $black;
+}
+
+.app {
+  max-width: 25rem;
+  margin: 0 auto;
+  line-height: 1.35;
+}
+
+@import 'verses';
+@import 'swap-controls';
