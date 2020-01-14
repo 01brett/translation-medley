@@ -1,16 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
+import SwapControls from './SwapControls';
 
-// import VerseControls from './VerseControls';
+export default function({ verse, getVerse }){
+  const [showSwapControls, setShowSwapControls] = useState(false);
 
-const Verse = ({ verse }) => {
+  const handleSwapControls = () => {
+    setShowSwapControls(prev => !prev);
+  }
+
   return(
     <>
-      <span className="verse">
-        <span className="verse-number">{verse.verse}</span>
-        {' '}{verse.text}{' '}
+      <span
+        className={showSwapControls ? 'verse active' : 'verse'}
+        onClick={handleSwapControls}
+      >
+        <span className="verse-number">
+          {' '}{verse.verseNumber}{' '}
+        </span>
+        {verse.text}
       </span>
+      {showSwapControls && (
+        <SwapControls
+          getVerse={getVerse}
+          cancel={handleSwapControls}
+        />
+      )}
     </>
   );
 }
-
-export default Verse;
