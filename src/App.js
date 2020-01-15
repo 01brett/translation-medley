@@ -55,7 +55,7 @@ const App = () => {
           <h1>Bible Translation Medley</h1>
           <div className='locator'>
             <h3>{passage.book} {passage.chapter} ({passage.translation})</h3>
-            <div className="passage-controls">
+            <div className="passage controls">
               <select
                 onChange={handleChange}
                 value={passageTranslation}
