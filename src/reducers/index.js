@@ -17,7 +17,6 @@ const initState = {
     translation: 'KJV',
     book: 'Philippians',
     chapter: '1',
-    verses: '1-30',
     content: [
       {
         verseNumber: "1",

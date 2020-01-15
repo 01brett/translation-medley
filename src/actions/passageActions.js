@@ -37,3 +37,30 @@ export const fetchPassage = passage => dispatch => {
       dispatch({ type: FETCH_PASSAGE_FAILURE, payload: err.response });
     });
 };
+
+export const fetchNETPassage = location => dispatch => {
+  dispatch({ type: FETCH_PASSAGE_START });
+  axios
+    .get(`https://cors-anywhere.herokuapp.com/http://labs.bible.org/api/?passage=${location}&type=json`)
+    .then(res => {
+      console.log(res.data);
+      const formatted = res.data.map(el => {
+        return {
+          translation: 'NET',
+          verseNumber: el.verse,
+          text: el.text
+        }
+      });
+      dispatch({
+        type: FETCH_PASSAGE_SUCCESS,
+        payload: {
+          translation: 'NET',
+          content: formatted
+        }
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: FETCH_PASSAGE_FAILURE, payload: err.response });
+    });
+};
