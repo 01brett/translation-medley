@@ -32,9 +32,14 @@ body {
 .app {
   max-width: 40rem;
   margin: 0 auto;
+  padding: $sm;
   color: $black;
   line-height: 1.45;
 }
 
 @import 'verses';
 @import 'swap-controls';
+
+.locator {
+  margin-bottom: $md;
+}

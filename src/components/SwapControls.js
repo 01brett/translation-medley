@@ -14,7 +14,7 @@ export default function(props){
     props.cancel();
   }
   return(
-    <div className="swap-controls">
+    <div className="swap controls">
       <button onClick={props.cancel}>Cancel</button>
       <select
         onChange={handleChange}
