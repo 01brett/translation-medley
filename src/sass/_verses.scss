@@ -8,12 +8,10 @@
   &:hover {
     cursor: pointer;
     background-color: $yellow;
-    box-shadow: 0 0 0 $xs $yellow;
   }
   &:active, &:focus, &.active {
     background-color: $black;
     color: $white;
-    box-shadow: 0 0 0 $xs $black;
   }
 }
 

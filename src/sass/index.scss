@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Serif+Pro&display=swap');
 @import 'resets';
 
 // Colors
@@ -11,6 +12,9 @@ $sm: .5rem;
 $md: 1rem;
 $lg: 1.5rem;
 $xl: 2rem;
+// Type
+$serif: 'Source Serif Pro', serif;
+$sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 
 * {
   box-sizing: border-box;
@@ -20,16 +24,16 @@ $xl: 2rem;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: $serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: $black;
 }
 
 .app {
-  max-width: 25rem;
+  max-width: 40rem;
   margin: 0 auto;
-  line-height: 1.35;
+  color: $black;
+  line-height: 1.45;
 }
 
 @import 'verses';

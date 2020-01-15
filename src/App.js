@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
 import { fetchVerse } from './actions/verseActions';
+import { fetchPassage } from './actions/passageActions';
+
 import translations from './helpers/translations';
 import Verse from './components/Verse';
 
@@ -13,23 +15,32 @@ const App = () => {
 
   const dispatch = useDispatch();
 
-  // const getPassage = () => {
-  //   dispatch(
-  //     fetchVerse()
-  //   );
-  // }
+  const [passageTranslation, setPassageTranslation] = useState(passage.translation);
+
+  const getPassage = () => {
+    let passageToFetch = {
+      translation: passageTranslation,
+      location: `${passage.book} ${passage.chapter}`
+    }
+    dispatch(
+      fetchPassage(passageToFetch)
+    );
+  }
+
+  const handleChange = e => {
+    e.preventDefault();
+    setPassageTranslation(e.target.value);
+  }
 
   const getVerse = (newTranslation, verseNumber) => {
-    let passageToFetch = {
+    let verseToFetch = {
       translation: newTranslation,
       location: `${passage.book} ${passage.chapter}.${verseNumber}`
     }
     dispatch(
-      fetchVerse(passageToFetch)
+      fetchVerse(verseToFetch)
     );
   }
-
-  console.log("Passage", passage);
 
   return (
     <div className="app">
@@ -44,6 +55,29 @@ const App = () => {
           <h1>Bible Translation Medley</h1>
           <div className='locator'>
             <h3>{passage.book} {passage.chapter} ({passage.translation})</h3>
+            <div className="passage-controls">
+              <select
+                onChange={handleChange}
+                value={passageTranslation}
+              >
+                <option>— Select a Translation —</option>
+                {translations.map(el => ( 
+                  <option
+                    defaultValue={el.id === passage.translation}
+                    disabled={el.id === passage.translation}
+                    key={el.id}
+                    value={el.id}
+                  >
+                    {el.id} : {el.display}
+                  </option>
+                ))}
+              </select>
+              <button
+                onClick={getPassage}
+              >
+                Swap
+              </button>
+            </div>
           </div>
           <div className="verses">
             {passage.content.map(verse => (
