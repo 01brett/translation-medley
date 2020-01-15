@@ -14,19 +14,25 @@ export default function({ verse, getVerse }){
   }
 
   return(
-    <span className={verse.translation !== passage.translation ? 'changed' : null}>
-      <span
-        className={showSwapControls ? 'verse active' : 'verse'}
-        onClick={handleSwapControls}
-      >
-        {' '}
-        <span className="verse-number">
-          {verse.verseNumber} {verse.translation !== passage.translation && (
-            <span className="ref">[{verse.translation}]</span>
-          )}
-        </span>
-        {' '}{verse.text}
+    <>
+      
+      <span className="verse-number">
+        {' '}{verse.verseNumber}{' '}
+
+        {verse.translation !== passage.translation && (
+          <span className="ref">({verse.translation}){' '}</span>
+        )}
       </span>
+      
+      <span className={verse.translation !== passage.translation ? 'changed' : null}>
+        <span
+          className={showSwapControls ? 'verse active' : 'verse'}
+          onClick={handleSwapControls}
+        >
+          {verse.text}
+        </span>
+      </span>
+
       {showSwapControls && (
         <SwapControls
           getVerse={getVerse}
@@ -34,6 +40,8 @@ export default function({ verse, getVerse }){
           verse={verse}
         />
       )}
-    </span>
+
+    
+    </>
   );
 }
