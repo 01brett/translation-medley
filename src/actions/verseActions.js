@@ -9,7 +9,6 @@ export const fetchVerse = passage => dispatch => {
   axios
     .get(`https://api.biblia.com/v1/bible/content/${passage.translation}.json?passage=${passage.location}&style=oneVersePerLine&key=fd37d8f28e95d3be8cb4fbc37e15e18e`)
     .then(res => {
-      console.log(res.data.text);
       const data = res.data.text
         .split(/\n/)
         .splice(1,1)[0]

@@ -4,6 +4,12 @@ import {
   FETCH_VERSE_FAILURE
 } from '../actions/verseActions';
 
+import {
+  FETCH_PASSAGE_START,
+  FETCH_PASSAGE_SUCCESS,
+  FETCH_PASSAGE_FAILURE
+} from '../actions/passageActions';
+
 const initState = {
   isFetching: false,
   error: '',
@@ -189,6 +195,27 @@ const reducer = (state = initState, action) => {
         error: ''
       };
     case FETCH_VERSE_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        error: action.payload
+      };
+    case FETCH_PASSAGE_START:
+      return {
+        ...state,
+        isFetching: true,
+      };
+    case FETCH_PASSAGE_SUCCESS:
+      return {
+        ...state,
+        passage: {
+          ...state.passage,
+          content: action.payload
+        },
+        isFetching: false,
+        error: ''
+      };
+    case FETCH_PASSAGE_FAILURE:
       return {
         ...state,
         isFetching: false,

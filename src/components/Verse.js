@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
+import { shallowEqual, useSelector } from 'react-redux';
 import SwapControls from './SwapControls';
 
-export default function({ verse, getVerse, currentTranslation }){
+export default function({ verse, getVerse }){
+  const { passage } =  useSelector(state => ({
+    passage: state.passage
+  }), shallowEqual);
+
   const [showSwapControls, setShowSwapControls] = useState(false);
 
   const handleSwapControls = () => {
@@ -16,7 +21,7 @@ export default function({ verse, getVerse, currentTranslation }){
       >
         {' '}
         <span className="verse-number">
-          {verse.verseNumber} {verse.translation && verse.translation !== currentTranslation && (
+          {verse.verseNumber} {verse.translation !== passage.translation && (
             <span className="ref">[{verse.translation}]</span>
           )}
         </span>
@@ -26,7 +31,6 @@ export default function({ verse, getVerse, currentTranslation }){
         <SwapControls
           getVerse={getVerse}
           cancel={handleSwapControls}
-          currentTranslation={currentTranslation}
           verse={verse}
         />
       )}
