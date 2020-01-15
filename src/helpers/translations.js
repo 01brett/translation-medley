@@ -22,5 +22,9 @@ export default [
   {
     display: "New English Translation",
     id: 'NET'
+  },
+  {
+    display: "English Standard Version",
+    id: 'ESV'
   }
 ];

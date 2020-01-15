@@ -14,7 +14,7 @@ export default function({ verse, getVerse }){
   }
 
   return(
-    <>
+    <span className={verse.translation !== passage.translation ? 'changed' : null}>
       <span
         className={showSwapControls ? 'verse active' : 'verse'}
         onClick={handleSwapControls}
@@ -34,6 +34,6 @@ export default function({ verse, getVerse }){
           verse={verse}
         />
       )}
-    </>
+    </span>
   );
 }

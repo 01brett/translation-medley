@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
-import { fetchVerse, fetchNETVerse } from './actions/verseActions';
-import { fetchPassage, fetchNETPassage } from './actions/passageActions';
+import {
+  fetchVerse,
+  fetchNETVerse,
+  fetchESVVerse
+} from './actions/verseActions';
+
+import {
+  fetchPassage,
+  fetchNETPassage,
+  fetchESVPassage
+} from './actions/passageActions';
 
 import PassageControls from './components/PassageControls'
 import Verse from './components/Verse';
@@ -22,6 +31,11 @@ const App = () => {
       case 'NET':
         dispatch(
           fetchNETPassage(`${passage.book} ${passage.chapter}`)
+        );
+        break;
+      case 'ESV':
+        dispatch(
+          fetchESVPassage(`${passage.book}+${passage.chapter}`)
         );
         break;
       default:
@@ -46,6 +60,11 @@ const App = () => {
       case 'NET':
         dispatch(
           fetchNETVerse(`${passage.book} ${passage.chapter}.${verseNumber}`)
+        );
+        break;
+      case 'ESV':
+        dispatch(
+          fetchESVVerse(`${passage.book}+${passage.chapter}:${verseNumber}`)
         );
         break;
       default:
