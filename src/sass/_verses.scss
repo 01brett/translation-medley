@@ -3,6 +3,8 @@
   justify-content: space-between;
 }
 
+.changed { background-color: $grey-bg;}
+
 .verse {
   z-index: 2;
   &:hover {
