@@ -18,11 +18,12 @@
 }
 
 .verse-number {
-  font-weight: 900;
+  font-family: $sans;
+  font-weight: 700;
   font-size: 65%;
   vertical-align: top;
   color: $grey1;
   .ref {
-    font-weight: 600;
+    font-weight: 500;
   }
 }
