@@ -25,12 +25,13 @@ $sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubunt
 }
 
 .app {
-  max-width: 40rem;
+  max-width: 48rem;
   margin: 0 auto;
   padding: 0 $md;
   color: $black;
   font-family: $serif;
-  line-height: 1.45;
+  font-size: 1.15rem;
+  line-height: 1.5;
 }
 
 @import 'verses';
