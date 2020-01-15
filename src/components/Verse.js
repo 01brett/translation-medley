@@ -14,15 +14,19 @@ export default function({ verse, getVerse }){
         className={showSwapControls ? 'verse active' : 'verse'}
         onClick={handleSwapControls}
       >
+        {' '}
         <span className="verse-number">
-          {' '}{verse.verseNumber}{' '}
+          {verse.verseNumber} {verse.translation && (
+            <span className="ref">[{verse.translation}]</span>
+          )}
         </span>
-        {verse.text}
+        {' '}{verse.text}
       </span>
       {showSwapControls && (
         <SwapControls
           getVerse={getVerse}
           cancel={handleSwapControls}
+          verseNumber={verse.verseNumber}
         />
       )}
     </>
