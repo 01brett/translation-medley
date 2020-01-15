@@ -10,7 +10,7 @@ export default function(props){
   }
 
   const getVerse = () => {
-    props.getVerse(translation, props.verseNumber);
+    props.getVerse(translation, props.verse.verseNumber);
     props.cancel();
   }
   return(
@@ -21,12 +21,13 @@ export default function(props){
         value={translation}
       >
         <option>— Select a Translation —</option>
-        {translations.map(el => (
+        {translations.map(el => ( 
           <option
+            disabled={el.id === props.verse.translation}
             key={el.id}
             value={el.id}
           >
-            {el.display} ({el.id})
+            {el.id} : {el.display}
           </option>
         ))}
       </select>

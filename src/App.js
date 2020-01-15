@@ -43,8 +43,7 @@ const App = () => {
         <>
           <h1>Bible Translation Medley</h1>
           <div className='locator'>
-            <h3>{passage.book} {passage.chapter}</h3>
-
+            <h3>{passage.book} {passage.chapter} ({passage.translation})</h3>
           </div>
           <div className="verses">
             {passage.content.map(verse => (
@@ -52,6 +51,7 @@ const App = () => {
                 key={verse.verseNumber}
                 verse={verse}
                 getVerse={getVerse}
+                currentTranslation={passage.translation}
               />
             ))}
           </div>

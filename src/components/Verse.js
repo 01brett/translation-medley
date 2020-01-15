@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SwapControls from './SwapControls';
 
-export default function({ verse, getVerse }){
+export default function({ verse, getVerse, currentTranslation }){
   const [showSwapControls, setShowSwapControls] = useState(false);
 
   const handleSwapControls = () => {
@@ -16,7 +16,7 @@ export default function({ verse, getVerse }){
       >
         {' '}
         <span className="verse-number">
-          {verse.verseNumber} {verse.translation && (
+          {verse.verseNumber} {verse.translation && verse.translation !== currentTranslation && (
             <span className="ref">[{verse.translation}]</span>
           )}
         </span>
@@ -26,7 +26,8 @@ export default function({ verse, getVerse }){
         <SwapControls
           getVerse={getVerse}
           cancel={handleSwapControls}
-          verseNumber={verse.verseNumber}
+          currentTranslation={currentTranslation}
+          verse={verse}
         />
       )}
     </>
