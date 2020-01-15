@@ -19,7 +19,10 @@
 
 .verse-number {
   font-weight: 900;
-  font-size: 80%;
+  font-size: 65%;
   vertical-align: top;
   color: $grey1;
+  .ref {
+    font-weight: 600;
+  }
 }

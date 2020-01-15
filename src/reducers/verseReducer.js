@@ -48,8 +48,13 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         passage: {
-          translation: action.payload.translation,
-
+          ...state.passage,
+          content: [
+            ...state.passage.content.map(el => (
+              (el.verseNumber === action.payload.verseNumber) ?
+                (action.payload) : (el)
+            ))
+          ]
         },
         isFetching: false,
         error: ''
