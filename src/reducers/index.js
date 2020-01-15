@@ -210,7 +210,8 @@ const reducer = (state = initState, action) => {
         ...state,
         passage: {
           ...state.passage,
-          content: action.payload
+          translation: action.payload.translation,
+          content: action.payload.content
         },
         isFetching: false,
         error: ''

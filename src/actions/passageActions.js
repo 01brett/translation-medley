@@ -25,7 +25,10 @@ export const fetchPassage = passage => dispatch => {
       dispatch(
         {
           type: FETCH_PASSAGE_SUCCESS,
-          payload: formattedPassage
+          payload: {
+            translation: passage.translation,
+            content: formattedPassage
+          }
         }
       )
     ))
