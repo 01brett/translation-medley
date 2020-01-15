@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
-import { fetchVerse } from './actions/verseActions';
-import { fetchPassage } from './actions/passageActions';
+import { fetchVerse, fetchNETVerse } from './actions/verseActions';
+import { fetchPassage, fetchNETPassage } from './actions/passageActions';
 
-import translations from './helpers/translations';
+import PassageControls from './components/PassageControls'
 import Verse from './components/Verse';
 
 const App = () => {
@@ -18,13 +18,22 @@ const App = () => {
   const [passageTranslation, setPassageTranslation] = useState(passage.translation);
 
   const getPassage = () => {
-    let passageToFetch = {
-      translation: passageTranslation,
-      location: `${passage.book} ${passage.chapter}`
+    switch (passageTranslation) {
+      case 'NET':
+        dispatch(
+          fetchNETPassage(`${passage.book} ${passage.chapter}`)
+        );
+        break;
+      default:
+        let passageToFetch = {
+          translation: passageTranslation,
+          location: `${passage.book} ${passage.chapter}`
+        }
+        dispatch(
+          fetchPassage(passageToFetch)
+        );
+        break;
     }
-    dispatch(
-      fetchPassage(passageToFetch)
-    );
   }
 
   const handleChange = e => {
@@ -32,14 +41,24 @@ const App = () => {
     setPassageTranslation(e.target.value);
   }
 
-  const getVerse = (newTranslation, verseNumber) => {
-    let verseToFetch = {
-      translation: newTranslation,
-      location: `${passage.book} ${passage.chapter}.${verseNumber}`
+  const getVerse = (newTrans, verseNumber) => {
+    switch (newTrans) {
+      case 'NET':
+        dispatch(
+          fetchNETVerse(`${passage.book} ${passage.chapter}.${verseNumber}`)
+        );
+        break;
+      default:
+        let verseToFetch = {
+          translation: newTrans,
+          location: `${passage.book} ${passage.chapter}.${verseNumber}`
+        }
+        dispatch(
+          fetchVerse(verseToFetch)
+        );
+        break;
     }
-    dispatch(
-      fetchVerse(verseToFetch)
-    );
+    
   }
 
   return (
@@ -55,29 +74,12 @@ const App = () => {
           <h1>Bible Translation Medley</h1>
           <div className='locator'>
             <h3>{passage.book} {passage.chapter} ({passage.translation})</h3>
-            <div className="passage controls">
-              <select
-                onChange={handleChange}
-                value={passageTranslation}
-              >
-                <option>— Select a Translation —</option>
-                {translations.map(el => ( 
-                  <option
-                    defaultValue={el.id === passage.translation}
-                    disabled={el.id === passage.translation}
-                    key={el.id}
-                    value={el.id}
-                  >
-                    {el.id} : {el.display}
-                  </option>
-                ))}
-              </select>
-              <button
-                onClick={getPassage}
-              >
-                Swap
-              </button>
-            </div>
+            <PassageControls
+              getPassage={getPassage}
+              passageTranslation={passageTranslation}
+              translation={passage.translation}
+              handleChange={handleChange}
+            />
           </div>
           <div className="verses">
             {passage.content.map(verse => (

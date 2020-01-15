@@ -32,3 +32,25 @@ export const fetchVerse = passage => dispatch => {
       dispatch({ type: FETCH_VERSE_FAILURE, payload: err.response });
     });
 };
+
+export const fetchNETVerse = location => dispatch => {
+  dispatch({ type: FETCH_VERSE_START });
+  axios
+    .get(`https://cors-anywhere.herokuapp.com/http://labs.bible.org/api/?passage=${location}&type=json`)
+    .then(res => {
+      console.log(res.data);
+      const formattedVerse = {
+        translation: 'NET',
+        verseNumber: res.data[0].verse,
+        text: res.data[0].text
+      };
+      dispatch({
+        type: FETCH_VERSE_SUCCESS,
+        payload: formattedVerse
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: FETCH_VERSE_FAILURE, payload: err.response });
+    });
+};

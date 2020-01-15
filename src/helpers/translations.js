@@ -18,5 +18,9 @@ export default [
   {
     display: "Young's Literal Translation",
     id: 'YLT'
+  },
+  {
+    display: "New English Translation",
+    id: 'NET'
   }
 ];
