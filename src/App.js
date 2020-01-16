@@ -85,9 +85,6 @@ const App = () => {
       {!passage && !isFetching && (
         <h3>Uh oh...</h3>
       )}
-      {isFetching && (
-        <h3>Loading...</h3>
-      )}
       {passage && (
         <>
           <h1>Bible Translation Medley</h1>

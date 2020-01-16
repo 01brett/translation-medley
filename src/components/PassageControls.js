@@ -22,6 +22,7 @@ export default function(props){
         ))}
       </select>
       <button
+        disabled={props.passageTranslation === props.translation}
         onClick={props.getPassage}
       >
         Swap
