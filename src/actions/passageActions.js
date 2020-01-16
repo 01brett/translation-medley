@@ -75,7 +75,7 @@ export const fetchESVPassage = location => dispatch => {
     })
     .then(res => {
       return res.data.passages[0]
-        .replace(/([[\]])/g, '')
+        .replace(/([\[\]])/g, '')
         .replace(/\n\n/g, '')
         .replace(/\s{2}/g, ' ')
         .split(/[ ]+(?=\d)/g)
