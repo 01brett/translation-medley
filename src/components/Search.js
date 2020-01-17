@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import { searchPassage } from '../actions/searchActions';
 
+import Controls from './Controls';
+
 export default function(){
   const [query, setQuery] = useState('');
 
@@ -17,7 +19,7 @@ export default function(){
   }
   
   return(
-    <form onSubmit={handleSubmit}>
+    <form className='search' onSubmit={handleSubmit}>
       <input
         type='text'
         id='search'
@@ -26,10 +28,10 @@ export default function(){
         value={query}
         onChange={handleChange}
       />
-      <select>
-        <option>KJV</option>
-      </select>
-      <button>Go</button>
+      <Controls
+        verse='search'
+        buttonText='Go'
+      />
     </form>
   );
 }

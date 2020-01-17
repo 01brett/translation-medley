@@ -38,7 +38,7 @@ export default function (props) {
                 bible.id === current
             )}
           >
-            {bible.id}: {bible.display}
+            ({bible.id}) {bible.display}
           </option>
         ))}
       </select>

@@ -64,7 +64,7 @@ const App = () => {
     <div className="app">
       {passage && (
         <>
-          <h1>Bible bible Medley</h1>
+          <h1>Bible Translation Medley</h1>
           {/* <Search /> */}
           <div className='locator'>
             <h3>{passage.book} {passage.chapter} ({passage.bible})</h3>

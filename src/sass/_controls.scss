@@ -15,3 +15,17 @@
     margin-left: $md;
   }
 }
+
+.search {
+  display: flex;
+  justify-content: flex-end;
+  padding: $sm;
+  background-color: goldenrod;
+  
+  input {
+    margin-right: $md;
+  }
+  .controls {
+    display: inline-block;
+  }
+}
