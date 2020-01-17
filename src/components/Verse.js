@@ -1,44 +1,52 @@
 import React, { useState } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
-import SwapControls from './SwapControls';
 
-export default function({ verse, getVerse }){
+import Controls from './Controls';
+
+export default function(props){
   const { passage } =  useSelector(state => ({
-    passage: state.passage
+    passage: state.passage,
   }), shallowEqual);
 
-  const [showSwapControls, setShowSwapControls] = useState(false);
+  const [isVerseSwapping, setIsVerseSwapping] = useState(false)
 
-  const handleSwapControls = () => {
-    setShowSwapControls(prev => !prev);
+  const handleVerseSwap = () => {
+    setIsVerseSwapping(prev => !prev);
+  }
+
+  const getVerse = bible => {
+    props.getVerse(bible, props.verse.verse);
+    handleVerseSwap();
   }
 
   return(
     <>
-      
       <span className="verse-number">
-        {' '}{verse.verseNumber}{' '}
+        {' '}{props.verse.verse}{' '}
 
-        {verse.translation !== passage.translation && (
-          <span className="ref">({verse.translation}){' '}</span>
+        {props.verse.bible !== passage.bible && (
+          <span className="ref">({props.verse.bible}){' '}</span>
         )}
       </span>
       
-      <span className={verse.translation !== passage.translation ? 'changed' : null}>
+      <span className={props.verse.bible !== passage.bible ? 'changed' : null}>
         <span
-          className={showSwapControls ? 'verse active' : 'verse'}
-          onClick={handleSwapControls}
+          className={isVerseSwapping ? 'verse active' : 'verse'}
+          onClick={handleVerseSwap}
         >
-          {verse.text}
+          {props.verse.text}
         </span>
       </span>
 
-      {showSwapControls && (
-        <SwapControls
-          getVerse={getVerse}
-          cancel={handleSwapControls}
-          verse={verse}
-        />
+      {isVerseSwapping && (
+        <div className='verse-swap'>
+          <button onClick={handleVerseSwap}>Cancel</button>
+          <Controls
+            onButton={getVerse}
+            buttonText='Swap'
+            verse={props.verse}
+          />
+        </div>
       )}
 
     

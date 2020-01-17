@@ -1,33 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
 import {
-  fetchVerse,
-  fetchNETVerse,
-  fetchESVVerse
+  fetchVerse, fetchNETVerse, fetchESVVerse
 } from './actions/verseActions';
 
 import {
-  fetchPassage,
-  fetchNETPassage,
-  fetchESVPassage
+  fetchPassage, fetchNETPassage, fetchESVPassage
 } from './actions/passageActions';
 
-import PassageControls from './components/PassageControls'
+import Controls from './components/Controls';
 import Verse from './components/Verse';
+// import Search from './components/Search';
 
 const App = () => {
-  const { passage, isFetching } =  useSelector(state => ({
+  const { passage } =  useSelector(state => ({
     passage: state.passage,
-    isFetching: state.isFetching
   }), shallowEqual);
 
   const dispatch = useDispatch();
 
-  const [passageTranslation, setPassageTranslation] = useState(passage.translation);
-
-  const getPassage = () => {
-    switch (passageTranslation) {
+  const getPassage = bible => {
+    switch (bible) {
       case 'NET':
         dispatch(
           fetchNETPassage(`${passage.book} ${passage.chapter}`)
@@ -39,71 +33,52 @@ const App = () => {
         );
         break;
       default:
-        let passageToFetch = {
-          translation: passageTranslation,
-          location: `${passage.book} ${passage.chapter}`
-        }
         dispatch(
-          fetchPassage(passageToFetch)
+          fetchPassage(bible, `${passage.book} ${passage.chapter}`)
         );
         break;
     }
   }
 
-  const handleChange = e => {
-    e.preventDefault();
-    setPassageTranslation(e.target.value);
-  }
-
-  const getVerse = (newTrans, verseNumber) => {
-    switch (newTrans) {
+  const getVerse = (bible, verse) => {
+    switch (bible) {
       case 'NET':
         dispatch(
-          fetchNETVerse(`${passage.book} ${passage.chapter}.${verseNumber}`)
+          fetchNETVerse(`${passage.book} ${passage.chapter}.${verse}`)
         );
         break;
       case 'ESV':
         dispatch(
-          fetchESVVerse(`${passage.book}+${passage.chapter}:${verseNumber}`)
+          fetchESVVerse(`${passage.book}+${passage.chapter}:${verse}`)
         );
         break;
       default:
-        let verseToFetch = {
-          translation: newTrans,
-          location: `${passage.book} ${passage.chapter}.${verseNumber}`
-        }
         dispatch(
-          fetchVerse(verseToFetch)
+          fetchVerse(bible, `${passage.book} ${passage.chapter}.${verse}`)
         );
         break;
     }
-    
   }
 
   return (
     <div className="app">
-      {!passage && !isFetching && (
-        <h3>Uh oh...</h3>
-      )}
       {passage && (
         <>
-          <h1>Bible Translation Medley</h1>
+          <h1>Bible bible Medley</h1>
+          {/* <Search /> */}
           <div className='locator'>
-            <h3>{passage.book} {passage.chapter} ({passage.translation})</h3>
-            <PassageControls
-              getPassage={getPassage}
-              passageTranslation={passageTranslation}
-              translation={passage.translation}
-              handleChange={handleChange}
+            <h3>{passage.book} {passage.chapter} ({passage.bible})</h3>
+            <Controls
+              onButton={getPassage}
+              buttonText='Swap'
             />
           </div>
           <div className="verses">
             {passage.content.map(verse => (
               <Verse
-                key={verse.verseNumber}
+                key={verse.verse}
                 verse={verse}
                 getVerse={getVerse}
-                currentTranslation={passage.translation}
               />
             ))}
           </div>
