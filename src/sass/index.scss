@@ -35,8 +35,8 @@ $sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubunt
 }
 
 @import 'verses';
-@import 'swap-controls';
+@import 'controls';
 
-.locator {
+form, .locator {
   margin-bottom: $md;
 }

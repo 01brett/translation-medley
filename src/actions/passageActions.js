@@ -4,10 +4,10 @@ export const FETCH_PASSAGE_START = 'FETCH_PASSAGE_START';
 export const FETCH_PASSAGE_SUCCESS = 'FETCH_PASSAGE_SUCCESS';
 export const FETCH_PASSAGE_FAILURE = 'FETCH_PASSAGE_FAILURE';
 
-export const fetchPassage = passage => dispatch => {
+export const fetchPassage = (bible, location) => dispatch => {
   dispatch({ type: FETCH_PASSAGE_START });
   axios
-    .get(`https://api.biblia.com/v1/bible/content/${passage.translation}.json?passage=${passage.location}&style=oneVersePerLine&key=fd37d8f28e95d3be8cb4fbc37e15e18e`)
+    .get(`https://cors-anywhere.herokuapp.com/https://api.biblia.com/v1/bible/content/${bible}.json?passage=${location}&style=oneVersePerLine&key=fd37d8f28e95d3be8cb4fbc37e15e18e`)
     .then(res => {
       return res.data.text
         .split(/\r\n/)
@@ -15,8 +15,8 @@ export const fetchPassage = passage => dispatch => {
         .map(el => {
           const arr = el.split(/(?<=[0-9])(?=[\D])/);
           return {
-            translation: passage.translation,
-            verseNumber: arr[0],
+            bible: bible,
+            verse: arr[0],
             text: arr[1]
           }
         })
@@ -26,7 +26,7 @@ export const fetchPassage = passage => dispatch => {
         {
           type: FETCH_PASSAGE_SUCCESS,
           payload: {
-            translation: passage.translation,
+            bible: bible,
             content: formattedPassage
           }
         }
@@ -43,18 +43,17 @@ export const fetchNETPassage = location => dispatch => {
   axios
     .get(`https://cors-anywhere.herokuapp.com/http://labs.bible.org/api/?passage=${location}&type=json`)
     .then(res => {
-      console.log(res.data);
       const formatted = res.data.map(el => {
         return {
-          translation: 'NET',
-          verseNumber: el.verse,
+          bible: 'NET',
+          verse: el.verse,
           text: el.text
         }
       });
       dispatch({
         type: FETCH_PASSAGE_SUCCESS,
         payload: {
-          translation: 'NET',
+          bible: 'NET',
           content: formatted
         }
       });
@@ -75,7 +74,7 @@ export const fetchESVPassage = location => dispatch => {
     })
     .then(res => {
       return res.data.passages[0]
-        .replace(/([\[\]])/g, '')
+        .replace(/([[\]])/g, '')
         .replace(/\n\n/g, '')
         .replace(/\s{2}/g, ' ')
         .split(/[ ]+(?=\d)/g)
@@ -83,8 +82,8 @@ export const fetchESVPassage = location => dispatch => {
         .map(el => {
           const arr = el.split(/(?<=[0-9])(?=[\D])/);
           return {
-            translation: 'ESV',
-            verseNumber: arr[0],
+            bible: 'ESV',
+            verse: arr[0],
             text: arr[1]
           }
         })
@@ -94,7 +93,7 @@ export const fetchESVPassage = location => dispatch => {
         {
           type: FETCH_PASSAGE_SUCCESS,
           payload: {
-            translation: 'ESV',
+            bible: 'ESV',
             content: formattedPassage
           }
         }
