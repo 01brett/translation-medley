@@ -11,7 +11,7 @@ export default function({ verseNum, verseBible, text }){
       <span className="verse-number">
         {' '}{verseNum}{' '}
         {verseBible !== passageBible && (
-          <span className="ref">
+          <span className="bible-reference">
             ({verseBible}){' '}
           </span>
         )}
