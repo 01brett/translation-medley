@@ -8,7 +8,7 @@ export default function(){
     chapter: state.passage.chapter,
     verseRange: state.passage.verseRange,
     bible: state.passage.bible
-  }), shallowEqual);
+  }), shallowEqual)
 
   return(
     <div className='heading'>
@@ -16,5 +16,5 @@ export default function(){
         {book} {chapter}:{verseRange} ({bible})
       </h3>
     </div>
-  );
+  )
 }
