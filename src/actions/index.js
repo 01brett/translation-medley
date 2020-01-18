@@ -97,9 +97,9 @@ const fetchNET = passage => dispatch => {
       dispatch({
         type: FETCH_PASSAGE_FAILURE,
         payload: err.response
-      });
-    });
-};
+      })
+    })
+}
 
 const fetchESV = passage => dispatch => {
   const location = `${passage.book} ${passage.chapter}:${passage.verseRange}`
@@ -143,5 +143,5 @@ const fetchESV = passage => dispatch => {
     .catch(err => {
       console.log(err);
       dispatch({ type: FETCH_PASSAGE_FAILURE, payload: err.response });
-    });
-};
+    })
+}

@@ -20,5 +20,5 @@ export default function({ verseNum, verseBible, text }){
         verseBible !== passageBible ? 'swapped verse' : 'verse'
       }>{text}</span>
     </>
-  );
+  )
 }
