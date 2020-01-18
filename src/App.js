@@ -29,12 +29,13 @@ const App = () => {
   }
 
   return (
-    <div className="app">
+    <>
       <Header />
       <PassageHeading />
-      <div className="verses">
+      <p className="verses">
         {allVerses(passage.bible).map(num => {
-          const swap = passage.swappedVerses.find( ({ verse }) => verse === num)
+          const swap = passage.swappedVerses
+            .find( ({ verse }) => verse === num)
           return <Verse
               key={num}
               verseBible={swap ? swap.bible : passage.bible}
@@ -42,8 +43,8 @@ const App = () => {
               text={verses(swap ? swap.bible : passage.bible)[num]}
             />
         })}
-      </div>
-    </div>
+      </p>
+    </>
   )
 }
 

@@ -1,16 +1,18 @@
-.changed { background-color: $grey-bg;}
-
 .verse {
   z-index: 2;
+  
   &:hover {
     cursor: pointer;
     background-color: $yellow;
   }
+
   &:active, &:focus, &.active {
     background-color: $black;
     color: $white;
   }
 }
+
+.changed { background-color: $grey-bg;}
 
 .verse-number {
   font-family: $sans;
@@ -18,7 +20,8 @@
   font-size: 65%;
   vertical-align: top;
   color: $grey1;
-  .ref {
+
+  .bible-reference {
     font-weight: 500;
   }
 }
