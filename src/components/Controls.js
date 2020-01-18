@@ -5,7 +5,7 @@ import { shallowEqual, useSelector } from 'react-redux';
 export default function (props) {
   // Pull in bibles array and current bible from state
   const { bibles, current } =  useSelector(state => ({
-    current: state.passage.bible,
+    passageBible: state.passage.bible,
     bibles: state.bibles
   }), shallowEqual);
 
@@ -20,44 +20,36 @@ export default function (props) {
   return (
     <div className="controls">
       <select onChange={handleChange} value={bible}>
-        {bibles.map(bible => ( 
-          <option key={bible.id} value={bible.id}
+        {bibles.map(el => ( 
+          <option key={el.id} value={el.id}
             defaultValue={(
                 props.verse
               ) ? (
-                bible.id === props.verse.bible
+                el.id === props.verse.bible
               ) : (
-                bible.id === current
+                el.id === current
             )}
-            disabled={
-              (
+            disabled={(
                 props.verse
               ) ? (
-                bible.id === props.verse.bible
+                el.id === props.verse.bible
               ) : (
-                bible.id === current
+                el.id === current
             )}
           >
-            ({bible.id}) {bible.display}
+            ({el.id}) {el.display}
           </option>
         ))}
       </select>
       <button
-        disabled={
-          (
+        disabled={(
             props.verse
           ) ? (
             !bible || bible === props.verse.bible
           ) : (
             bible.id === current
         )}
-        onClick={() => (
-          props.verse
-        ) ? (
-          props.onButton(bible, props.verse)
-        ) : (
-          props.onButton(bible)
-        )}
+        onClick={() => props.onButton(bible)}
       >{props.buttonText}</button>
     </div>
   );

@@ -9,7 +9,7 @@ const initState = {
   error: '',
   content: {
     'KJV': {
-      Philippians: {
+      'Philippians': {
         '1': {
           allVerses: [1, 2, 3, 4, 5, 6, 7],
           verses: {
@@ -29,6 +29,7 @@ const initState = {
     bible: 'KJV',
     book: 'Philippians',
     chapter: '1',
+    verseRange: '1–7',
     swappedVerses: [
       // {
       //   'verse': 3,
