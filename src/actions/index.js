@@ -6,7 +6,7 @@ export const FETCH_PASSAGE_FAILURE = 'FETCH_PASSAGE_FAILURE'
 
 export const CLEAR_SWAPS = 'CLEAR_SWAPS'
 
-export const clearSwaps = () => dispatch =>{
+export const clearSwaps = () => dispatch => {
   dispatch({ type: CLEAR_SWAPS })
 }
 
@@ -29,9 +29,10 @@ const fetchDefault = passage => dispatch => {
   const location = `${passage.book} ${passage.chapter}:${passage.verseRange}`
 
   axios
-    .get(`https://cors-anywhere.herokuapp.com/http://labs.bible.org/api/?passage=${location}&type=json`)
+    .get(`https://cors-anywhere.herokuapp.com/https://api.biblia.com/v1/bible/content/${passage.bible}.json?passage=${location}&style=oneVersePerLine&key=fd37d8f28e95d3be8cb4fbc37e15e18e`)
     .then(res => {
       const rawText = res.data.text
+      console.log(rawText)
       return Object.fromEntries(
         rawText
           .split(/\r\n/)
@@ -71,7 +72,7 @@ const fetchNET = passage => dispatch => {
   const location = `${passage.book} ${passage.chapter}:${passage.verseRange}`
 
   axios
-    .get(`https://cors-anywhere.herokuapp.com/https://api.biblia.com/v1/bible/content/${passage.bible}.json?passage=${location}&style=oneVersePerLine&key=fd37d8f28e95d3be8cb4fbc37e15e18e`)
+    .get(`https://cors-anywhere.herokuapp.com/http://labs.bible.org/api/?passage=${location}&type=json`)
     .then(res => {
       const rawText = res.data;
       return Object.fromEntries(rawText.map(el => ([ [el.verse], el.text ])))

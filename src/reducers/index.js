@@ -95,7 +95,10 @@ export default (state = initState, action) => {
     case CLEAR_SWAPS:
       return {
         ...state,
-        swappedVerses: []
+        passage: {
+          ...state.passage,
+          swappedVerses: []
+        }
       }
     case FETCH_PASSAGE_START:
       return {

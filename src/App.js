@@ -28,14 +28,17 @@ const App = () => {
             .verses
   }
 
+  console.log('App Passage', passage)
   return (
     <>
       <Header />
       <PassageHeading />
       <p className="verses">
         {allVerses(passage.bible).map(num => {
+
           const swap = passage.swappedVerses
             .find( ({ verse }) => verse === num)
+          
           return <Verse
               key={num}
               verseBible={swap ? swap.bible : passage.bible}
