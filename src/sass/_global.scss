@@ -1,0 +1,34 @@
+// Colors
+$black: #212121;
+$grey1: #888;
+$grey-bg: #e9e9e9;
+$white: #fff;
+$yellow: rgba(255,255,0,.85);
+
+// Ratios
+$xs: .25rem;
+$sm: .5rem;
+$md: 1rem;
+$lg: 1.5rem;
+$xl: 2rem;
+
+// Type
+$serif: 'Source Serif Pro', serif;
+$sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+
+* {
+  box-sizing: border-box;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.app {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 0 $md;
+  color: $black;
+  font-family: $serif;
+  font-size: 1.15rem;
+  line-height: 1.5;
+}

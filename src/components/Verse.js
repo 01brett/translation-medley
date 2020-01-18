@@ -1,24 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
-import Controls from './Controls';
-
 export default function(props){
+  console.log(props)
   const { passage } =  useSelector(state => ({
     passage: state.passage,
-  }), shallowEqual);
+  }), shallowEqual)
 
   return(
     <>
       <span className="verse-number">
-        {' '}{props.number}{' '}
-
-        {props.bible !== passage.bible && (
-          <span className="ref">({props.bible}){' '}</span>
+        {' '}{props.verseNum}{' '}
+        {props.verseBible !== passage.bible && (
+          <span className="ref">
+            ({props.verseBible}){' '}
+          </span>
         )}
       </span>
       
-      <span className={props.bible !== passage.bible ? 'changed' : null}>
+      <span className={
+        props.verseBible !== passage.bible ? 'changed' : null
+      }>
         <span className='verse'>{props.text}</span>
       </span>
     </>

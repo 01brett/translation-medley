@@ -2,7 +2,7 @@ import {
   FETCH_PASSAGE_START,
   FETCH_PASSAGE_SUCCESS,
   FETCH_PASSAGE_FAILURE
-} from '../actions';
+} from '../actions'
 
 const initState = {
   isFetching: false,
@@ -24,6 +24,22 @@ const initState = {
         }
       }
     },
+    'NET': {
+      'Philippians': {
+        '1': {
+          allVerses: [1, 2, 3, 4, 5, 6, 7],
+          verses: {
+            '1': 'From Paul and Timothy, slaves of Christ Jesus, to all the saints in Christ Jesus who are in Philippi, with the overseers and deacons.',
+            '2': 'Grace and peace to you from God our Father and the Lord Jesus Christ!',
+            '3': 'I thank my God every time I remember you.',
+            '4': 'I always pray with joy in my every prayer for all of you',
+            '5': 'because of your participation in the gospel from the first day until now.',
+            '6': 'For I am sure of this very thing, that the one who began a good work in you will perfect it until the day of Christ Jesus.',
+            '7': 'For it is right for me to think this about all of you, because I have you in my heart, since both in my imprisonment and in the defense and confirmation of the gospel all of you became partners in God’s grace together with me.'
+          }
+        }
+      }
+    }
   },
   passage: {
     bible: 'KJV',
@@ -31,10 +47,10 @@ const initState = {
     chapter: '1',
     verseRange: '1–7',
     swappedVerses: [
-      // {
-      //   'verse': 3,
-      //   'bible': 'NET'
-      // },
+      {
+        'verse': 3,
+        'bible': 'NET'
+      },
     ]
   },
   bibles: [
@@ -75,7 +91,7 @@ export default (state = initState, action) => {
       return {
         ...state,
         isFetching: true,
-      };
+      }
     case FETCH_PASSAGE_SUCCESS:
       return {
         ...state,
@@ -91,14 +107,14 @@ export default (state = initState, action) => {
           book: action.payload.passage.book,
           chapter: action.payload.passage.chapter
         }
-      };
+      }
     case FETCH_PASSAGE_FAILURE:
       return {
         ...state,
         isFetching: false,
         error: action.payload
-      };
+      }
     default:
-      return state;
+      return state
   }
-};
+}
