@@ -2,6 +2,8 @@ import React from 'react';
 
 export default function(){
   return(
-    <h1>Bible Translation Medley</h1>
+    <>
+      <h1>Bible Translation Medley</h1>
+    </>
   );
 }
