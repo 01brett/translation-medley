@@ -51,6 +51,10 @@ const initState = {
         'verse': 3,
         'bible': 'NET'
       },
+      {
+        'verse': 6,
+        'bible': 'NET'
+      }
     ]
   },
   bibles: [
