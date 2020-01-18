@@ -1,10 +1,12 @@
 import React from 'react'
 import { render } from 'react-dom'
+
 import './sass/index.scss'
 import App from './App'
 
-import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
+
+import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import logger from 'redux-logger'
 

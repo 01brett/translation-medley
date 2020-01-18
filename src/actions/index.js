@@ -4,35 +4,43 @@ export const FETCH_PASSAGE_START = 'FETCH_PASSAGE_START'
 export const FETCH_PASSAGE_SUCCESS = 'FETCH_PASSAGE_SUCCESS'
 export const FETCH_PASSAGE_FAILURE = 'FETCH_PASSAGE_FAILURE'
 
+export const USE_CONTENT_STORE = 'USE_CONTENT_STORE'
+
 export const CLEAR_SWAPS = 'CLEAR_SWAPS'
 
 export const clearSwaps = () => dispatch => {
   dispatch({ type: CLEAR_SWAPS })
 }
 
-export const getPassage = passage => dispatch => {
-  dispatch({ type: FETCH_PASSAGE_START })
-  switch (passage.bible) {
-    case 'NET':
-      fetchNET(passage)
-      break
-    case 'ESV':
-      fetchESV(passage)
-      break
-    default:
-      fetchDefault(passage)
-      break
-  }
+export const getPassage = passage => (dispatch, getState) => {
+  const { content, passage: storePassage } = getState();
+
+  if (content.hasOwnProperty(passage.bible)) {
+    dispatch({
+      type: USE_CONTENT_STORE, payload: passage.bible
+    })
+  } else {
+    switch (passage.bible) {
+      case 'NET':
+        dispatch(fetchNET(storePassage))
+        break
+      case 'ESV':
+        dispatch(fetchESV(passage))
+        break
+      default:
+        dispatch(fetchDefault(passage))
+        break
+    } // end switch
+  } // end else
 }
 
 const fetchDefault = passage => dispatch => {
   const location = `${passage.book} ${passage.chapter}:${passage.verseRange}`
-
+  dispatch({ type: FETCH_PASSAGE_START })
   axios
     .get(`https://cors-anywhere.herokuapp.com/https://api.biblia.com/v1/bible/content/${passage.bible}.json?passage=${location}&style=oneVersePerLine&key=fd37d8f28e95d3be8cb4fbc37e15e18e`)
     .then(res => {
       const rawText = res.data.text
-      console.log(rawText)
       return Object.fromEntries(
         rawText
           .split(/\r\n/)
@@ -40,7 +48,8 @@ const fetchDefault = passage => dispatch => {
           .map(el => el.split(/(?<=[0-9])(?=[\D])/))
       )
     })
-    .then(cleanText => (
+    .then(cleanText => {
+      console.log(passage.bible, cleanText)
       dispatch({
         type: FETCH_PASSAGE_SUCCESS,
         payload: {
@@ -61,7 +70,7 @@ const fetchDefault = passage => dispatch => {
           }
         }
       })
-    ))
+    })
     .catch(err => {
       console.log(err)
       dispatch({ type: FETCH_PASSAGE_FAILURE, payload: err.response })
@@ -70,14 +79,15 @@ const fetchDefault = passage => dispatch => {
 
 const fetchNET = passage => dispatch => {
   const location = `${passage.book} ${passage.chapter}:${passage.verseRange}`
-
+  dispatch({ type: FETCH_PASSAGE_START })
   axios
     .get(`https://cors-anywhere.herokuapp.com/http://labs.bible.org/api/?passage=${location}&type=json`)
     .then(res => {
       const rawText = res.data;
       return Object.fromEntries(rawText.map(el => ([ [el.verse], el.text ])))
     })
-    .then(cleanText => (
+    .then(cleanText => {
+      console.log(passage.bible, cleanText)
       dispatch({
         type: FETCH_PASSAGE_SUCCESS,
         payload: {
@@ -98,7 +108,7 @@ const fetchNET = passage => dispatch => {
           }
         }
       })
-    ))
+    })
     .catch(err => {
       console.log(err);
       dispatch({
@@ -110,7 +120,7 @@ const fetchNET = passage => dispatch => {
 
 const fetchESV = passage => dispatch => {
   const location = `${passage.book} ${passage.chapter}:${passage.verseRange}`
-
+  dispatch({ type: FETCH_PASSAGE_START })
   axios
     .get(`https://api.esv.org/v3/passage/text/?q=${location}&include-passage-references=false&include-footnotes=false&include-headings=false&include-copyright=false&include-short-copyright=false`, { headers: { 'Authorization': 'Token 1410f911e8d537a0c57c1219c101ecf84540d6c4' } })
     .then(res => {
@@ -125,7 +135,8 @@ const fetchESV = passage => dispatch => {
         .map(el => el.split(/(?<=[0-9])(?=[\D])/))
       )
     })
-    .then(cleanText => (
+    .then(cleanText => {
+      console.log(passage.bible, cleanText)
       dispatch({
         type: FETCH_PASSAGE_SUCCESS,
         payload: {
@@ -146,7 +157,7 @@ const fetchESV = passage => dispatch => {
           }
         }
       })
-    ))
+    })
     .catch(err => {
       console.log(err);
       dispatch({ type: FETCH_PASSAGE_FAILURE, payload: err.response });

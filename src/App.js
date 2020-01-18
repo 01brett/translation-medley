@@ -29,6 +29,7 @@ const App = () => {
   }
 
   console.log('App Passage', passage)
+  console.log('App Content', content)
   return (
     <>
       <Header />
