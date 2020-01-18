@@ -2,7 +2,8 @@ import {
   FETCH_PASSAGE_START,
   FETCH_PASSAGE_SUCCESS,
   FETCH_PASSAGE_FAILURE,
-  CLEAR_SWAPS
+  CLEAR_SWAPS,
+  USE_CONTENT_STORE
 } from '../actions'
 
 const initState = {
@@ -98,6 +99,14 @@ export default (state = initState, action) => {
         passage: {
           ...state.passage,
           swappedVerses: []
+        }
+      }
+    case USE_CONTENT_STORE:
+      return {
+        ...state,
+        passage: {
+          ...state.passage,
+          bible: action.payload
         }
       }
     case FETCH_PASSAGE_START:
