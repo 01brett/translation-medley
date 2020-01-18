@@ -1,20 +1,21 @@
 import React from 'react'
 import { shallowEqual, useSelector, useDispatch } from 'react-redux'
 
-import { getPassage, clearSwaps } from '../actions'
+import { swapPassageBible, clearSwaps } from '../actions'
 import BibleSwapper from './BibleSwapper'
 
 export default function(){
   
-  const { passage } =  useSelector(state => ({
-    passage: state.passage
+  const { passage, swapped } =  useSelector(state => ({
+    passage: state.passage,
+    swapped: state.swappedVerses
   }), shallowEqual)
 
   const dispatch = useDispatch()
 
-  const swapPassage = passage => {
+  const swap = passage => {
     dispatch(
-      getPassage(passage)
+      swapPassageBible(passage)
     )
   }
 
@@ -24,7 +25,6 @@ export default function(){
     )
   }
 
-  console.log('PassageHeading Passage', passage)
   return(
     <div className='heading'>
       <h2 className='title'>
@@ -33,14 +33,14 @@ export default function(){
       <div className='controls'>
         <button
           onClick={clear}
-          disabled={passage.swappedVerses.length < 1}
+          disabled={swapped.length < 1}
         >
           Clear
         </button>
         <BibleSwapper
           passage={passage}
           buttonText='Swap'
-          buttonOnClick={swapPassage}
+          buttonOnClick={swap}
         />
       </div>
     </div>

@@ -22,9 +22,6 @@ export default function (props) {
     props.buttonOnClick(passage)
   }
 
-  console.log('Swapper Props', props)
-  console.log('Swapper Controlled Passage', passage)
-
   return (
     <div className='swapper'>
 

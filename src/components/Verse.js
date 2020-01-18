@@ -1,14 +1,19 @@
-import React from 'react';
-import { shallowEqual, useSelector } from 'react-redux';
+import React from 'react'
+import { shallowEqual, useSelector } from 'react-redux'
 
-export default function({ verseNum, verseBible, text }){
+export default function({ verseNum, verseBible, text, verseToSwap }){
 
   const { passageBible } =  useSelector(state => ({
     passageBible: state.passage.bible,
   }), shallowEqual)
 
+  const toggleControls = () => {
+    verseToSwap(verseNum)
+  }
+
   return(
-    <>
+    <span id={`verse-${verseNum}`}>
+
       <span className="verse-number">
         {' '}{verseNum}{' '}
         {verseBible !== passageBible && (
@@ -16,9 +21,13 @@ export default function({ verseNum, verseBible, text }){
         )}
       </span>
       
-      <span className={
-        verseBible !== passageBible ? 'swapped verse' : 'verse'
-      }>{text}</span>
-    </>
+      <span 
+        className={verseBible !== passageBible ? 'swapped verse-text' : 'verse-text'}
+        onClick={toggleControls}
+      >
+        {text}
+      </span>
+
+    </span>
   )
 }

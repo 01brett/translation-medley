@@ -1,16 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { shallowEqual, useSelector } from 'react-redux'
 
 import Header from './components/Header'
 import PassageHeading from './components/PassageHeading'
 import Verse from './components/Verse'
+import VerseSwapper from './components/VerseSwapper'
 
 const App = () => {
 
-  const { passage, content } =  useSelector(state => ({
+  const { content, passage, swapped } =  useSelector(state => ({
+    content: state.content,
     passage: state.passage,
-    content: state.content
+    swapped: state.swappedVerses
   }), shallowEqual)
+
+  const [verseToSwap, setVerseToSwap] = useState('')
 
   const allVerses = bible => {
     return content
@@ -28,8 +32,7 @@ const App = () => {
             .verses
   }
 
-  console.log('App Passage', passage)
-  console.log('App Content', content)
+  console.log('Verse to Swap:', verseToSwap)
   return (
     <>
       <Header />
@@ -37,17 +40,23 @@ const App = () => {
       <p className="verses">
         {allVerses(passage.bible).map(num => {
 
-          const swap = passage.swappedVerses
-            .find( ({ verse }) => verse === num)
+          const swap = swapped.find( ({ verse }) => verse === num)
+
+          const isSwap = swap ? swap.bible : passage.bible
           
           return <Verse
               key={num}
-              verseBible={swap ? swap.bible : passage.bible}
+              verseBible={isSwap}
               verseNum={num}
-              text={verses(swap ? swap.bible : passage.bible)[num]}
+              text={verses(isSwap)[num]}
+              verseToSwap={setVerseToSwap}
             />
         })}
       </p>
+      {/* <VerseSwapper
+        verseNum={verseToSwap}
+        verseToSwap={setVerseToSwap}
+      /> */}
     </>
   )
 }

@@ -1,0 +1,15 @@
+.verse-swapper {
+  display: inline-block;
+
+  .controls {
+    display: flex;
+    padding: $sm;
+    background-color: $white;
+    border-radius: $sm;
+    box-shadow: 0 0 0 0.5px $grey3, 0 $xs $sm 0 $grey1;
+
+    button:first-child {
+      margin-right: $sm;
+    }
+  }
+}
