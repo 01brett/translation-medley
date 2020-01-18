@@ -1,47 +1,59 @@
-import React from 'react';
-import { shallowEqual, useSelector, useDispatch } from 'react-redux';
+import React from 'react'
+import { shallowEqual, useSelector } from 'react-redux'
 
-import { getPassage } from './actions';
-
-import Controls from './components/Controls';
-import Verse from './components/Verse';
-// import Search from './components/Search';
+import Header from './components/Header'
+import PassageHeading from './components/PassageHeading'
+import Verse from './components/Verse'
 
 const App = () => {
+
   const { passage, content } =  useSelector(state => ({
     passage: state.passage,
     content: state.content
-  }), shallowEqual);
+  }), shallowEqual)
 
-  const dispatch = useDispatch();
+  const allVerses = bible => {
+    return content
+      [bible]
+        [passage.book]
+          [passage.chapter]
+            .allVerses
+  }
 
-  const allVerses = content[passage.bible][passage.book][passage.chapter].allVerses;
-  const verses = content[passage.bible][passage.book][passage.chapter].verses;
-
+  const verses = bible => {
+    return content
+      [bible]
+        [passage.book]
+          [passage.chapter]
+            .verses
+  }
 
   return (
     <div className="app">
-      {passage && (
-        <>
-          <h1>Bible Translation Medley</h1>
-          {/* <Search /> */}
-          <div className='locator'>
-            <h3>{passage.book} {passage.chapter}:{passage.verseRange} ({passage.bible})</h3>
-          </div>
-          <div className="verses">
-            {allVerses.map(num => (
-              <Verse key={num}
-                number={num}
-                text={verses[num]}
-                bible={passage.bible}
-                getPassage={getPassage}
-              />
-            ))}
-          </div>
-        </>
-      )}
+      <Header />
+      <PassageHeading />
+      <div className="verses">
+        {allVerses(passage.bible).map(num => {
+          const swap = passage.swappedVerses.find( ({ verse }) => verse === num)
+          if (swap) {
+            return <Verse
+              key={num}
+              verseNum={num}
+              text={verses(swap.bible)[num]}
+              verseBible={swap.bible}
+            />
+          } else {
+            return <Verse
+              key={num}
+              verseNum={num}
+              text={verses(passage.bible)[num]}
+              verseBible={passage.bible}
+            />
+          }
+        })}
+      </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
