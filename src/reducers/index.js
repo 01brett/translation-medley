@@ -1,7 +1,8 @@
 import {
   FETCH_PASSAGE_START,
   FETCH_PASSAGE_SUCCESS,
-  FETCH_PASSAGE_FAILURE
+  FETCH_PASSAGE_FAILURE,
+  CLEAR_SWAPS
 } from '../actions'
 
 const initState = {
@@ -91,33 +92,38 @@ const initState = {
 
 export default (state = initState, action) => {
   switch (action.type) {
-    case FETCH_PASSAGE_START:
+    case CLEAR_SWAPS:
       return {
         ...state,
-        isFetching: true,
+        swappedVerses: []
       }
-    case FETCH_PASSAGE_SUCCESS:
-      return {
-        ...state,
-        isFetching: false,
-        error: '',
-        content: {
-          ...state.content,
-          ...action.payload.content
-        },
-        passage: {
-          ...state.passage,
-          bible: action.payload.passage.bible,
-          book: action.payload.passage.book,
-          chapter: action.payload.passage.chapter
-        }
-      }
-    case FETCH_PASSAGE_FAILURE:
-      return {
-        ...state,
-        isFetching: false,
-        error: action.payload
-      }
+    // case FETCH_PASSAGE_START:
+    //   return {
+    //     ...state,
+    //     isFetching: true,
+    //   }
+    // case FETCH_PASSAGE_SUCCESS:
+    //   return {
+    //     ...state,
+    //     isFetching: false,
+    //     error: '',
+    //     content: {
+    //       ...state.content,
+    //       ...action.payload.content
+    //     },
+    //     passage: {
+    //       ...state.passage,
+    //       bible: action.payload.passage.bible,
+    //       book: action.payload.passage.book,
+    //       chapter: action.payload.passage.chapter
+    //     }
+    //   }
+    // case FETCH_PASSAGE_FAILURE:
+    //   return {
+    //     ...state,
+    //     isFetching: false,
+    //     error: action.payload
+    //   }
     default:
       return state
   }

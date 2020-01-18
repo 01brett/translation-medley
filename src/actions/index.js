@@ -4,6 +4,12 @@ export const FETCH_PASSAGE_START = 'FETCH_PASSAGE_START'
 export const FETCH_PASSAGE_SUCCESS = 'FETCH_PASSAGE_SUCCESS'
 export const FETCH_PASSAGE_FAILURE = 'FETCH_PASSAGE_FAILURE'
 
+export const CLEAR_SWAPS = 'CLEAR_SWAPS'
+
+export const clearSwaps = () => dispatch =>{
+  dispatch({ type: CLEAR_SWAPS })
+}
+
 export const getPassage = passage => dispatch => {
   dispatch({ type: FETCH_PASSAGE_START })
   switch (passage.bible) {
