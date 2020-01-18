@@ -1,38 +1,46 @@
 import React from 'react'
-import { shallowEqual, useSelector } from 'react-redux'
+import { shallowEqual, useSelector, useDispatch } from 'react-redux'
 
 import { getPassage, clearSwaps } from '../actions'
 import BibleSwapper from './BibleSwapper'
 
 export default function(){
   
-  const { book, chapter, verseRange, bible } =  useSelector(state => ({
-    bible: state.passage.bible,
-    book: state.passage.book,
-    chapter: state.passage.chapter,
-    verseRange: state.passage.verseRange
+  const { passage } =  useSelector(state => ({
+    passage: state.passage
   }), shallowEqual)
 
-  const passage = {
-    bible,
-    book,
-    chapter,
-    verseRange
+  const dispatch = useDispatch()
+
+  const swapPassage = passage => {
+    dispatch(
+      getPassage(passage)
+    )
   }
 
+  const clear = () => {
+    dispatch(
+      clearSwaps()
+    )
+  }
+
+  console.log('PassageHeading Passage', passage)
   return(
     <div className='heading'>
       <h2 className='title'>
-        {book} {chapter}:{verseRange} ({bible})
+        {passage.book} {passage.chapter}:{passage.verseRange} ({passage.bible})
       </h2>
       <div className='controls'>
-        
+        <button
+          onClick={clear}
+          disabled={passage.swappedVerses.length < 1}
+        >
+          Clear
+        </button>
         <BibleSwapper
           passage={passage}
-          primaryText='Swap'
-          primaryOnClick={getPassage}
-          secondaryText='Clear'
-          secondaryOnClick={clearSwaps}
+          buttonText='Swap'
+          buttonOnClick={swapPassage}
         />
       </div>
     </div>

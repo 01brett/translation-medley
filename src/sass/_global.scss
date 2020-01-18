@@ -58,6 +58,13 @@ select, button {
     border-color: $black;
     box-shadow: 0 0 0 $xs $yellow;
   }
+
+  &[disabled] {
+    cursor: not-allowed;
+    color: $grey2;
+    border-color: $grey3;
+    background-color: $grey3;
+  }
 }
 
 select {

@@ -4,4 +4,8 @@
   .title {
     margin-bottom: $sm;
   }
+  .controls {
+    display: flex;
+    justify-content: space-between;
+  }
 }
