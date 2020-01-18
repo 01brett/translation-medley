@@ -2,13 +2,18 @@ import React from 'react'
 import { shallowEqual, useSelector } from 'react-redux'
 
 export default function(){
-  const { passage } =  useSelector(state => ({
-    passage: state.passage
+  
+  const { book, chapter, verseRange, bible } =  useSelector(state => ({
+    book: state.passage.book,
+    chapter: state.passage.chapter,
+    verseRange: state.passage.verseRange,
+    bible: state.passage.bible
   }), shallowEqual);
+
   return(
     <div className='heading'>
       <h3>
-        {passage.book} {passage.chapter}:{passage.verseRange} ({passage.bible})
+        {book} {chapter}:{verseRange} ({bible})
       </h3>
     </div>
   );

@@ -1,4 +1,5 @@
 .verse {
+  user-select:none;
   z-index: 2;
   
   &:hover {
@@ -12,16 +13,17 @@
   }
 }
 
-.changed { background-color: $grey-bg;}
+.swapped { background-color: $grey-bg;}
 
 .verse-number {
+  user-select:none;
   font-family: $sans;
   font-weight: 700;
   font-size: 65%;
   vertical-align: top;
   color: $grey1;
 
-  .bible-reference {
+  .ref {
     font-weight: 500;
   }
 }
