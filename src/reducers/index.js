@@ -1,17 +1,21 @@
 import {
-  FETCH_PASSAGE_START,
-  FETCH_PASSAGE_SUCCESS,
-  FETCH_PASSAGE_FAILURE,
+  FETCH_START,
+  FETCH_SUCCESS,
+  FETCH_FAILURE,
+  ADD_CONTENT,
+  SET_CONTENT,
+  ADD_SWAP,
   CLEAR_SWAPS,
-  USE_CONTENT_STORE
-} from '../actions'
+  SET_PASSAGE,
+  SET_PASSAGE_BIBLE
+} from '../types'
 
 const initState = {
   isFetching: false,
   error: '',
   content: {
-    'KJV': {
-      'Philippians': {
+    KJV: {
+      Philippians: {
         '1': {
           allVerses: [1, 2, 3, 4, 5, 6, 7],
           verses: {
@@ -26,8 +30,8 @@ const initState = {
         }
       }
     },
-    'NET': {
-      'Philippians': {
+    NET: {
+      Philippians: {
         '1': {
           allVerses: [1, 2, 3, 4, 5, 6, 7],
           verses: {
@@ -41,6 +45,22 @@ const initState = {
           }
         }
       }
+    },
+    ASV: {
+      Philippians: {
+        '1': {
+          allVerses: [1, 2, 3, 4, 5, 6, 7],
+          verses: {
+            '1': 'Paul and Timothy, servants of Christ Jesus, to all the saints in Christ Jesus that are at Philippi, with the bishops and deacons: ',
+            '2': 'Grace to you and peace from God our Father and the Lord Jesus Christ. ',
+            '3': 'I thank my God upon all my remembrance of you, ',
+            '4': 'always in every supplication of mine on behalf of you all making my supplication with joy, ',
+            '5': 'for your fellowship in furtherance of the gospel from the first day until now; ',
+            '6': 'being confident of this very thing, that he who began a good work in you will perfect it until the day of Jesus Christ: ',
+            '7': 'even as it is right for me to be thus minded on behalf of you all, because I have you in my heart, inasmuch as, both in my bonds and in the defence and confirmation of the gospel, ye all are partakers with me of grace.'
+          }
+        }
+      }
     }
   },
   passage: {
@@ -48,17 +68,21 @@ const initState = {
     book: 'Philippians',
     chapter: '1',
     verseRange: '1–7',
-    swappedVerses: [
-      {
-        'verse': 3,
-        'bible': 'NET'
-      },
-      {
-        'verse': 6,
-        'bible': 'NET'
-      }
-    ]
   },
+  swappedVerses: [
+    {
+      verse: 3,
+      bible: 'NET'
+    },
+    {
+      verse: 4,
+      bible: 'ASV'
+    },
+    {
+      verse: 6,
+      bible: 'NET'
+    }
+  ],
   bibles: [
     {
       id: 'ESV',
@@ -93,48 +117,53 @@ const initState = {
 
 export default (state = initState, action) => {
   switch (action.type) {
-    case CLEAR_SWAPS:
-      return {
-        ...state,
-        passage: {
-          ...state.passage,
-          swappedVerses: []
-        }
-      }
-    case USE_CONTENT_STORE:
-      return {
-        ...state,
-        passage: {
-          ...state.passage,
-          bible: action.payload
-        }
-      }
-    case FETCH_PASSAGE_START:
+    case FETCH_START:
       return {
         ...state,
         isFetching: true,
       }
-    case FETCH_PASSAGE_SUCCESS:
+    case FETCH_SUCCESS:
       return {
         ...state,
         isFetching: false,
         error: '',
-        content: {
-          ...state.content,
-          ...action.payload.content
-        },
-        passage: {
-          ...state.passage,
-          bible: action.payload.passage.bible,
-          book: action.payload.passage.book,
-          chapter: action.payload.passage.chapter
-        }
+        content: { ...state.content, ...action.payload }
       }
-    case FETCH_PASSAGE_FAILURE:
+    case FETCH_FAILURE:
       return {
         ...state,
         isFetching: false,
         error: action.payload
+      }
+    case CLEAR_SWAPS:
+      return {
+        ...state,
+        swappedVerses: []
+      }
+    case ADD_SWAP:
+      return {
+        ...state,
+        swappedVerses: [ ...state.swappedVerses, ...action.payload ]
+      }
+    case ADD_CONTENT:
+      return {
+        ...state,
+        content: { ...state.content, ...action.payload }
+      }
+    case SET_CONTENT:
+      return {
+        ...state,
+        content: { ...action.payload }
+      }
+    case SET_PASSAGE:
+      return {
+        ...state,
+        passage: { ...action.payload }
+      }
+    case SET_PASSAGE_BIBLE:
+      return {
+        ...state,
+        passage: { ...state.passage, bible: action.payload }
       }
     default:
       return state

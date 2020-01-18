@@ -1,4 +1,17 @@
-.verse {
+.verse-number {
+  user-select:none;
+  color: $grey1;
+  font-family: $sans;
+  font-weight: 700;
+  font-size: 65%;
+  vertical-align: top;
+
+  .ref {
+    font-weight: 500;
+  }
+}
+
+.verse-text {
   user-select:none;
   z-index: 2;
   
@@ -14,16 +27,3 @@
 }
 
 .swapped { background-color: $grey-bg;}
-
-.verse-number {
-  user-select:none;
-  color: $grey1;
-  font-family: $sans;
-  font-weight: 700;
-  font-size: 65%;
-  vertical-align: top;
-
-  .ref {
-    font-weight: 500;
-  }
-}
