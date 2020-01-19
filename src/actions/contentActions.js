@@ -1,7 +1,6 @@
-import {
-  ADD_CONTENT,
-  SET_CONTENT
-} from '../types'
+// Content store of Bible passages
+export const ADD_CONTENT = 'ADD_CONTENT'
+export const SET_CONTENT = 'SET_CONTENT'
 
 export const addContent = (passage, content) => ({
   type: ADD_CONTENT,

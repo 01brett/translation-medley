@@ -1,17 +1,14 @@
 import axios from 'axios'
 
-import {
-  FETCH_START,
-  FETCH_SUCCESS,
-  FETCH_FAILURE
-} from '../types'
+// Fetch bible text
+export const FETCH_START = 'FETCH_START'
+export const FETCH_SUCCESS = 'FETCH_SUCCESS'
+export const FETCH_FAILURE = 'FETCH_FAILURE'
 
 export const fetchDefault = passage => dispatch => {
   const location = `${passage.book} ${passage.chapter}:${passage.verseRange}`
 
-  dispatch(
-    fetchStart()
-  )
+  dispatch( fetchStart() )
 
   axios
     .get(`https://cors-anywhere.herokuapp.com/https://api.biblia.com/v1/bible/content/${passage.bible}.json?passage=${location}&style=oneVersePerLine&key=fd37d8f28e95d3be8cb4fbc37e15e18e`)
@@ -26,24 +23,22 @@ export const fetchDefault = passage => dispatch => {
     })
     .then(cleanText => {
       console.log(`${passage.bible}:`, cleanText, passage)
-      dispatch(
-        fetchSuccess(passage, cleanText)
-      )
+      dispatch( fetchSuccess() )
+      return {
+        passage: passage,
+        content: cleanText
+      }
     })
     .catch(err => {
       console.log(err)
-      dispatch(
-        fetchFailure(err.response)
-      )
+      dispatch( fetchFailure(err.response) )
     })
 }
 
 export const fetchNET = passage => dispatch => {
   const location = `${passage.book} ${passage.chapter}:${passage.verseRange}`
   
-  dispatch(
-    fetchStart()
-  )
+  dispatch( fetchStart() )
 
   axios
     .get(`https://cors-anywhere.herokuapp.com/http://labs.bible.org/api/?passage=${location}&type=json`)
@@ -53,24 +48,22 @@ export const fetchNET = passage => dispatch => {
     })
     .then(cleanText => {
       console.log(`${passage.bible}:`, cleanText, passage)
-      dispatch(
-        fetchSuccess(passage, cleanText)
-      )
+      dispatch( fetchSuccess() )
+      return {
+        passage: passage,
+        content: cleanText
+      }
     })
     .catch(err => {
       console.log(err)
-      dispatch(
-        fetchFailure(err.response)
-      )
+      dispatch( fetchFailure(err.response) )
     })
 }
 
 export const fetchESV = passage => dispatch => {
   const location = `${passage.book} ${passage.chapter}:${passage.verseRange}`
   
-  dispatch(
-    fetchStart()
-  )
+  dispatch( fetchStart() )
 
   axios
     .get(`https://api.esv.org/v3/passage/text/?q=${location}&include-passage-references=false&include-footnotes=false&include-headings=false&include-copyright=false&include-short-copyright=false`, {
@@ -90,15 +83,15 @@ export const fetchESV = passage => dispatch => {
     })
     .then(cleanText => {
       console.log(`${passage.bible}:`, cleanText, passage)
-      dispatch(
-        fetchSuccess(passage, cleanText)
-      )
+      dispatch( fetchSuccess() )
+      return {
+        passage: passage,
+        content: cleanText
+      }
     })
     .catch(err => {
       console.log(err)
-      dispatch(
-        fetchFailure(err.response)
-      )
+      dispatch( fetchFailure(err.response) )
     })
 }
 
@@ -106,9 +99,8 @@ const fetchStart = () => ({
   type: FETCH_START
 })
 
-const fetchSuccess = ({ passage, content }) => ({
-  type: FETCH_SUCCESS,
-  payload: { ...passage, ...content }
+const fetchSuccess = () => ({
+  type: FETCH_SUCCESS
 })
 
 const fetchFailure = error => ({
