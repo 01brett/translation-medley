@@ -10,17 +10,12 @@ import {
 export const swapPassageBible = passage => (dispatch, getState) => {
   const { content, passage: currentPassage } = getState()
 
-  const promise = func => new Promise((resolve) => {
-    resolve(func)
-  })
-
   if ( content.hasOwnProperty(passage.bible) ) {
     dispatch( setPassageBible(passage.bible) )
   } else {
     switch (passage.bible) {
       case 'NET':
-        promise( dispatch( fetchNET(passage) ) )
-          .then( console.log('Promise Success') )
+        dispatch( fetchNET(passage) )
         break
       case 'ESV':
         dispatch( fetchESV(passage) )

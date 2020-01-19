@@ -61,7 +61,71 @@ const initState = {
           }
         }
       }
-    }
+    },
+    ESV: {
+      Philippians: {
+        '1': {
+          allVerses: [1, 2, 3, 4, 5, 6, 7],
+          verses: {
+            '1': ' Paul and Timothy, servants of Christ Jesus, To all the saints in Christ Jesus who are at Philippi, with the overseers and deacons:',
+            '2': ' Grace to you and peace from God our Father and the Lord Jesus Christ.',
+            '3': ' I thank my God in all my remembrance of you,',
+            '4': ' always in every prayer of mine for you all making my prayer with joy,',
+            '5': ' because of your partnership in the gospel from the first day until now.',
+            '6': ' And I am sure of this, that he who began a good work in you will bring it to completion at the day of Jesus Christ.',
+            '7': ' It is right for me to feel this way about you all, because I hold you in my heart, for you are all partakers with me of grace, both in my imprisonment and in the defense and confirmation of the gospel.'
+          }
+        }
+      }
+    },
+    LEB: {
+      Philippians: {
+        '1': {
+          allVerses: [1, 2, 3, 4, 5, 6, 7],
+          verses: {
+            '1': 'Paul and Timothy, slaves of Christ Jesus, to all the saints in Christ Jesus who are in Philippi, together with the overseers and deacons. ',
+            '2': 'Grace to you and peace from God our Father and the Lord Jesus Christ. ',
+            '3': 'I give thanks to my God upon my every remembrance of you, ',
+            '4': 'always in my every prayer for all of you, making the prayer with joy, ',
+            '5': 'because of your participation in the gospel from the first day until now, ',
+            '6': 'convinced of this same thing, that the one who began a good work in you will finish it until the day of Christ Jesus, ',
+            '7': 'just as it is right for me to think this about all of you, because I have you in my heart, since both in my imprisonment and in the defense and confirmation of the gospel all of you are sharers of grace with me.'
+          }
+        }
+      }
+    },
+    DARBY: {
+      Philippians: {
+        '1': {
+          allVerses: [1, 2, 3, 4, 5, 6, 7],
+          verses: {
+            '1': 'Paul and Timotheus, bondmen of Jesus Christ, to all the saints in Christ Jesus who are in Philippi, with the overseers and ministers; ',
+            '2': 'grace to you, and peace from God our Father and the Lord Jesus Christ. ',
+            '3': 'I thank my God for my whole remembrance of you, ',
+            '4': 'constantly in my every supplication, making the supplication for you all with joy, ',
+            '5': 'because of your fellowship with the gospel, from the first day until now; ',
+            '6': 'having confidence of this very thing, that he who has begun in you a good work will complete it unto Jesus Christ’s day: ',
+            '7': 'as it is righteous for me to think this as to you all, because ye have me in your hearts, and that both in my bonds and in the defence and confirmation of the glad tidings ye are all participators in my grace.'
+          }
+        }
+      }
+    },
+    YLT: {
+      Philippians: {
+        '1': {
+          allVerses: [1, 2, 3, 4, 5, 6, 7],
+          verses: {
+            '1': 'Paul and Timotheus, servants of Jesus Christ, to all the saints in Christ Jesus who are in Philippi, with overseers and ministrants; ',
+            '2': 'Grace to you, and peace from God our Father, and the Lord Jesus Christ. ',
+            '3': 'I give thanks to my God upon all the remembrance of you, ',
+            '4': 'always, in every supplication of mine for you all, with joy making the supplication, ',
+            '5': 'for your contribution to the good news from the first day till now, ',
+            '6': 'having been confident of this very thing, that He who did begin in you a good work, will perform it till a day of Jesus Christ. ',
+            '7': 'According as it is righteous for me to think this in behalf of you all, because of my having you in the heart, both in my bonds, and in the defence and confirmation of the good news, all of you being fellow-partakers with me of grace.'
+          }
+        }
+      }
+    },
   },
   passage: {
     bible: 'KJV',
