@@ -29,7 +29,7 @@ export default function(props){
   const isSwap = swappedVerse ? swappedVerse.bible : passage.bible
 
   return(
-    <div className="verse-swapper">
+    <div className="verse-swapper" style={props.position}>
       <div className='controls'>
         <button onClick={cancel}>
           Cancel

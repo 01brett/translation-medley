@@ -3,9 +3,7 @@ import { shallowEqual, useSelector, useDispatch } from 'react-redux'
 
 import { showControls } from '../actions'
 
-export default function({
-  verseNum, verseBible, text, verseToSwap, verseSwapper
-}) {
+export default function({ verseNum, verseBible, text, verseToSwap, active }) {
 
   const { passageBible } =  useSelector(state => ({
     passageBible: state.passage.bible,
@@ -32,7 +30,7 @@ export default function({
         className={verseBible !== passageBible ? 'swapped verse-text' : 'verse-text'}
         onClick={handleClick}
       >
-        {text}
+        <span className={active ? 'active' : null}>{text}</span>
       </span>
 
     </span>
