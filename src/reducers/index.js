@@ -8,7 +8,7 @@ import {
   CLEAR_SWAPS,
   SET_PASSAGE,
   SET_PASSAGE_BIBLE
-} from '../types'
+} from '../actions'
 
 const initState = {
   isFetching: false,
@@ -126,8 +126,7 @@ export default (state = initState, action) => {
       return {
         ...state,
         isFetching: false,
-        error: '',
-        content: { ...state.content, ...action.payload }
+        error: ''
       }
     case FETCH_FAILURE:
       return {

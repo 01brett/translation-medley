@@ -1,7 +1,6 @@
-import {
-  ADD_SWAP,
-  CLEAR_SWAPS,
-} from '../types'
+// Swapped Verses updating
+export const ADD_SWAP = 'ADD_SWAP'
+export const CLEAR_SWAPS = 'CLEAR_SWAPS'
 
 export const addSwap = verse => ({
   type: ADD_SWAP,

@@ -1,7 +1,6 @@
-import {
-  SET_PASSAGE,
-  SET_PASSAGE_BIBLE
-} from '../types'
+// Passage updating
+export const SET_PASSAGE = 'SET_PASSAGE'
+export const SET_PASSAGE_BIBLE = 'SET_PASSAGE_BIBLE'
 
 export const setPassage = passage => ({
   type: SET_PASSAGE,
