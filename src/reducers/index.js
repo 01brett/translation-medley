@@ -1,10 +1,13 @@
 import {
   ADD_SWAP,
   CLEAR_SWAPS,
+  SHOW_CONTROLS,
+  HIDE_CONTROLS,
   SET_PASSAGE_BIBLE
 } from '../actions'
 
 const initState = {
+  isToggled: false,
   isFetching: false,
   error: '',
   content: {
@@ -181,10 +184,33 @@ export default (state = initState, action) => {
         swapped: []
       }
     case ADD_SWAP:
+      if (state.swapped.find( ({ verse }) => verse === action.payload.verse)) {
+        return {
+          ...state,
+          swapped: [
+            ...state.swapped.map(el => (
+              el.verse === action.payload.verse
+                ? action.payload
+                : el
+            ))
+          ]
+        }
+      } else {
+        return {
+          ...state,
+          swapped: [ ...state.swapped, action.payload ]
+        }
+      }
+    case SHOW_CONTROLS:
       return {
         ...state,
-        swapped: [ ...state.swapped, ...action.payload ]
+        isToggled: true
       }
+      case HIDE_CONTROLS:
+        return {
+          ...state,
+          isToggled: false
+        }
     case SET_PASSAGE_BIBLE:
       return {
         ...state,
