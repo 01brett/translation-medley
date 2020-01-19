@@ -11,7 +11,7 @@ const App = () => {
   const { content, passage, swapped } =  useSelector(state => ({
     content: state.content,
     passage: state.passage,
-    swapped: state.swappedVerses
+    swapped: state.swapped
   }), shallowEqual)
 
   const [verseToSwap, setVerseToSwap] = useState('')
@@ -53,10 +53,10 @@ const App = () => {
             />
         })}
       </p>
-      {/* <VerseSwapper
+      <VerseSwapper
         verseNum={verseToSwap}
         verseToSwap={setVerseToSwap}
-      /> */}
+      />
     </>
   )
 }

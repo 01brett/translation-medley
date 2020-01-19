@@ -8,42 +8,37 @@ export default function (props) {
     bibles: state.bibles
   }), shallowEqual)
 
-  const [passage, setPassage] = useState({ ...props.passage })
+  const [bible, setBible] = useState(props.bible)
 
   const handleChange = e => {
     e.preventDefault()
-    setPassage({
-      ...passage,
-      bible: e.target.value
-    })
+    setBible(e.target.value)
   }
 
   const buttonOnClick = () => {
-    props.buttonOnClick(passage)
+    props.buttonOnClick(bible)
   }
 
   return (
     <div className='swapper'>
 
-      <select onChange={handleChange} value={passage.bible}>
+      <select onChange={handleChange} value={bible}>
 
-        {bibles.map(bible => ( 
-          <option
-            key={bible.id}
-            value={bible.id}
-            defaultValue={bible.id === props.passage.bible}
-            disabled={bible.id === props.passage.bible}
+        {bibles.map(bible => (
+
+          <option key={bible.id} value={bible.id}
+
+            defaultValue={bible.id === props.bible}
+            disabled={bible.id === props.bible}
           >
             ({bible.id}) {bible.display}
           </option>
+          
         ))}
 
       </select>
 
-      <button
-        onClick={buttonOnClick}
-        disabled={passage.bible === props.passage.bible}
-      >
+      <button onClick={buttonOnClick} disabled={bible === props.bible}>
         {props.buttonText}
       </button>
 

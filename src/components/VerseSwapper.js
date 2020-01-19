@@ -2,7 +2,7 @@ import React from 'react'
 import { shallowEqual, useSelector, useDispatch } from 'react-redux'
 
 import BibleSwapper from './BibleSwapper'
-import { swapVerse } from '../actions'
+import { addSwap } from '../actions'
 
 export default function(props){
 
@@ -12,14 +12,8 @@ export default function(props){
 
   const dispatch = useDispatch()
 
-  const swap = passage => {
-    const newPassage = {
-      ...passage,
-      verse: props.verseNum
-    }
-    dispatch(
-      swapVerse(newPassage)
-    )
+  const swap = ({ bible }) => {
+    dispatch(addSwap({ verse: props.verseNum, bible: bible }))
     props.verseToSwap('')
   }
 

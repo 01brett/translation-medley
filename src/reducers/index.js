@@ -1,12 +1,6 @@
 import {
-  FETCH_START,
-  FETCH_SUCCESS,
-  FETCH_FAILURE,
-  ADD_CONTENT,
-  SET_CONTENT,
   ADD_SWAP,
   CLEAR_SWAPS,
-  SET_PASSAGE,
   SET_PASSAGE_BIBLE
 } from '../actions'
 
@@ -133,7 +127,7 @@ const initState = {
     chapter: '1',
     verseRange: '1–7',
   },
-  swappedVerses: [
+  swapped: [
     {
       verse: 3,
       bible: 'NET'
@@ -181,47 +175,15 @@ const initState = {
 
 export default (state = initState, action) => {
   switch (action.type) {
-    case FETCH_START:
-      return {
-        ...state,
-        isFetching: true,
-      }
-    case FETCH_SUCCESS:
-      return {
-        ...state,
-        isFetching: false,
-        error: ''
-      }
-    case FETCH_FAILURE:
-      return {
-        ...state,
-        isFetching: false,
-        error: action.payload
-      }
     case CLEAR_SWAPS:
       return {
         ...state,
-        swappedVerses: []
+        swapped: []
       }
     case ADD_SWAP:
       return {
         ...state,
-        swappedVerses: [ ...state.swappedVerses, ...action.payload ]
-      }
-    case ADD_CONTENT:
-      return {
-        ...state,
-        content: { ...state.content, ...action.payload }
-      }
-    case SET_CONTENT:
-      return {
-        ...state,
-        content: { ...action.payload }
-      }
-    case SET_PASSAGE:
-      return {
-        ...state,
-        passage: { ...action.payload }
+        swapped: [ ...state.swapped, ...action.payload ]
       }
     case SET_PASSAGE_BIBLE:
       return {
