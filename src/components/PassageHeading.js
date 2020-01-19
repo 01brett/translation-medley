@@ -20,6 +20,7 @@ export default function(){
 
   const clear = () => {
     dispatch(clearSwaps())
+    dispatch(hideControls())
   }
 
   return(
