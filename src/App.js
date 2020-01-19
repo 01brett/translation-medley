@@ -8,7 +8,8 @@ import VerseSwapper from './components/VerseSwapper'
 
 const App = () => {
 
-  const { content, passage, swapped } =  useSelector(state => ({
+  const { isToggled, content, passage, swapped } =  useSelector(state => ({
+    isToggled: state.isToggled,
     content: state.content,
     passage: state.passage,
     swapped: state.swapped
@@ -53,10 +54,12 @@ const App = () => {
             />
         })}
       </p>
-      <VerseSwapper
-        verseNum={verseToSwap}
-        verseToSwap={setVerseToSwap}
-      />
+      {isToggled && (
+        <VerseSwapper
+          verseNum={verseToSwap}
+          verseToSwap={setVerseToSwap}
+        />
+      )}
     </>
   )
 }
