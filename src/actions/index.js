@@ -1,35 +1,24 @@
-export {
-  FETCH_START,
-  FETCH_SUCCESS,
-  FETCH_FAILURE,
-  fetchDefault,
-  fetchNET,
-  fetchESV
-} from './fetchActions'
+////////////
+// Passage updating
+////////////
+export const SET_PASSAGE_BIBLE = 'SET_PASSAGE_BIBLE'
 
-export {
-  SET_PASSAGE,
-  SET_PASSAGE_BIBLE,
-  setPassage,
-  setPassageBible
-} from './passageActions'
+export const setPassageBible = bible => ({
+  type: SET_PASSAGE_BIBLE,
+  payload: bible
+})
 
-export {
-  ADD_SWAP,
-  CLEAR_SWAPS,
-  addSwap,
-  clearSwaps
-} from './verseActions'
+////////////
+// Swapped Verses updating
+////////////
+export const ADD_SWAP = 'ADD_SWAP'
+export const CLEAR_SWAPS = 'CLEAR_SWAPS'
 
-export {
-  ADD_CONTENT,
-  SET_CONTENT,
-  addContent,
-  setContent
-} from './contentActions'
+export const addSwap = verse => ({
+  type: ADD_SWAP,
+  payload: { ...verse }
+})
 
-export {
-  swapPassageBible,
-  swapVerse,
-  searchPassage
-} from './comboActions'
+export const clearSwaps = () => ({
+  type: CLEAR_SWAPS
+})
