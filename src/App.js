@@ -41,7 +41,7 @@ const App = () => {
     return {
       position: 'absolute',
       top: vPos + 4 + 'px',
-      marginLeft: '-14.5rem',
+      marginLeft: '-15.15rem',
       left: '50%'
     }
   }
