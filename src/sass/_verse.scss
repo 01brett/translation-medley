@@ -20,7 +20,7 @@
     background-color: $yellow;
   }
 
-  &:active, &:focus, &.active {
+  &:active, &:focus, & > .active {
     background-color: $black;
     color: $white;
   }

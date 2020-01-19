@@ -32,8 +32,20 @@ const App = () => {
           [passage.chapter]
             .verses
   }
+  
+  const position = () => {
 
-  console.log('Verse to Swap:', verseToSwap)
+    const v = document.querySelector(`#verse-${verseToSwap}`)
+    const vPos = v.getClientRects()[v.getClientRects().length - 1].bottom
+
+    return {
+      position: 'absolute',
+      top: vPos + 4 + 'px',
+      marginLeft: '-14.5rem',
+      left: '50%'
+    }
+  }
+  
   return (
     <>
       <Header />
@@ -46,6 +58,7 @@ const App = () => {
           const isSwap = swap ? swap.bible : passage.bible
           
           return <Verse
+              active={isToggled && num === verseToSwap}
               key={num}
               verseBible={isSwap}
               verseNum={num}
@@ -56,6 +69,7 @@ const App = () => {
       </p>
       {isToggled && (
         <VerseSwapper
+          position={position()}
           verseNum={verseToSwap}
           verseToSwap={setVerseToSwap}
         />
