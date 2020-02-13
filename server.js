@@ -10,7 +10,7 @@ server.get('/', (req, res) => {
   res.json({ message: 'API is running' });
 });
 
-const PORT = process.env.PORT || 3300;
+const PORT = process.env.PORT || 3001;
 
 server.listen(PORT, () => {
   console.log(`\n∎∎∎∎∎∎ Listening on port ${PORT} ∎∎∎∎∎∎\n`);

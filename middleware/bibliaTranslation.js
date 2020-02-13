@@ -1,10 +1,10 @@
 const axios = require('axios');
 
 module.exports = (req, res, next) => {
-  const text = req.body;
-  const location = `${text.book} ${text.chapter}:${text.verseRange}`;
+  const passage = req.body;
+  const location = `${passage.book} ${passage.chapter}:${passage.verseRange}`;
   const url = encodeURI(
-    `https://cors-anywhere.herokuapp.com/https://api.biblia.com/v1/bible/content/${text.bible}.json?passage=${location}&style=oneVersePerLine&key=${process.env.BIBLIA}`
+    `https://cors-anywhere.herokuapp.com/https://api.biblia.com/v1/bible/content/${passage.bible}.json?passage=${location}&style=oneVersePerLine&key=${process.env.BIBLIA}`
   );
   axios
     .get(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
@@ -19,7 +19,7 @@ module.exports = (req, res, next) => {
     })
     .then(cleanText => {
       req.data = {
-        passage: text,
+        passage: passage,
         content: cleanText
       };
       next();
