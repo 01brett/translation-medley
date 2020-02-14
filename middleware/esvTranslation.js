@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 module.exports = (req, res, next) => {
-  const text = req.body;
+  const text = req.query;
   const location = `${text.book} ${text.chapter}:${text.verseRange}`;
   const url = encodeURI(
     `https://api.esv.org/v3/passage/text/?q=${location}&include-passage-references=false&include-footnotes=false&include-headings=false&include-copyright=false&include-short-copyright=false`
