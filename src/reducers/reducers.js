@@ -15,28 +15,6 @@ const initState = {
   isFetching: false,
   error: '',
   content: {
-    KJV: {
-      Philippians: {
-        '1': {
-          allVerses: [1, 2, 3, 4, 5, 6, 7],
-          verses: {
-            '1':
-              'Paul and Timotheus, the servants of Jesus Christ, to all the saints in Christ Jesus which are at Philippi, with the bishops and deacons:',
-            '2':
-              'Grace be unto you, and peace, from God our Father, and from the Lord Jesus Christ.',
-            '3': 'I thank my God upon every remembrance of you,',
-            '4':
-              'Always in every prayer of mine for you all making request with joy,',
-            '5':
-              'For your fellowship in the gospel from the first day until now;',
-            '6':
-              'Being confident of this very thing, that he which hath begun a good work in you will perform it until the day of Jesus Christ:',
-            '7':
-              'Even as it is meet for me to think this of you all, because I have you in my heart; inasmuch as both in my bonds, and in the defence and confirmation of the gospel, ye all are partakers of my grace.'
-          }
-        }
-      }
-    },
     NET: {
       Philippians: {
         '1': {
@@ -91,10 +69,6 @@ const initState = {
     {
       verse: 3,
       bible: 'NET'
-    },
-    {
-      verse: 4,
-      bible: 'KJV'
     },
     {
       verse: 6,
