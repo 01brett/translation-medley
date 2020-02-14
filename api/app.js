@@ -46,7 +46,7 @@ app.get(
         [passage.bible]: {
           [passage.book]: {
             [passage.chapter]: {
-              allVerses: Object.keys(content),
+              allVerses: Object.keys(content).map(el => Number(el)),
               verses: content
             }
           }

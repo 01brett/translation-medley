@@ -9,8 +9,9 @@ import {
 import BibleSwapper from './BibleSwapper';
 
 export default function() {
-  const { passage, swapped } = useSelector(
+  const { isToggled, passage, swapped } = useSelector(
     state => ({
+      isToggled: state.isToggled,
       passage: state.passage,
       swapped: state.swapped
     }),
@@ -21,12 +22,12 @@ export default function() {
 
   const swap = bible => {
     dispatch(changeBible(bible));
-    dispatch(hideVerseControls());
+    isToggled && dispatch(hideVerseControls());
   };
 
   const clear = () => {
     dispatch(clearVerseSwaps());
-    dispatch(hideVerseControls());
+    isToggled && dispatch(hideVerseControls());
   };
 
   return (
