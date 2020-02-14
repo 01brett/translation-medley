@@ -4,8 +4,9 @@ import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import { showVerseControls } from '../actions/actions';
 
 export default function({ verseNum, verseBible, text, verseToSwap, active }) {
-  const { passageBible } = useSelector(
+  const { isToggled, passageBible } = useSelector(
     state => ({
+      isToggled: state.isToggled,
       passageBible: state.passage.bible
     }),
     shallowEqual
@@ -15,7 +16,7 @@ export default function({ verseNum, verseBible, text, verseToSwap, active }) {
 
   const handleClick = () => {
     verseToSwap(verseNum);
-    dispatch(showVerseControls());
+    !isToggled && dispatch(showVerseControls());
   };
 
   return (

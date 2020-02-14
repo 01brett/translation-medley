@@ -82,19 +82,36 @@ export function fetchFailure(error) {
 // COMBO FUNCTIONS //
 /////////////////////
 export function changeBible(bible) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const { content, passage } = getState();
-
-    const updatedPassage = {
-      ...passage,
-      bible: bible
-    };
 
     if (content.hasOwnProperty(bible)) {
       dispatch(setPassageBible(bible));
     } else {
-      dispatch(fetchText(updatedPassage));
+      const res = await dispatch(
+        fetchText({
+          ...passage,
+          bible: bible
+        })
+      );
+      dispatch(setPassageBible(res.passage.bible));
     }
+  };
+}
+
+export function handleVerseSwap(verse) {
+  return async (dispatch, getState) => {
+    const { content, passage } = getState();
+
+    if (!content.hasOwnProperty(verse.bible)) {
+      await dispatch(
+        fetchText({
+          ...passage,
+          bible: verse.bible
+        })
+      );
+    }
+    dispatch(addVerseSwap(verse));
   };
 }
 
@@ -106,10 +123,9 @@ export function fetchText(passage) {
     }${passage.verseRange && `&verseRange=${passage.verseRange}`}`;
     try {
       const res = await axios.get(`/api/passage/${queryParams}`);
-
       dispatch(fetchSuccess());
       dispatch(addPassageContent(res.data.content));
-      dispatch(setPassageBible(res.data.passage.bible));
+      return res.data;
     } catch (error) {
       console.log('Fetch', error);
       dispatch(fetchFailure(error));

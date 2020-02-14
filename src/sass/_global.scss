@@ -26,13 +26,8 @@ $sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
   margin: 0;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-}
-
 .loading {
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   margin: 0;
