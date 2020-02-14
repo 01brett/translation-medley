@@ -90,8 +90,6 @@ export function changeBible(bible) {
       bible: bible
     };
 
-    console.log('changeBible() updatedPassage •••', updatedPassage);
-
     if (content.hasOwnProperty(bible)) {
       dispatch(setPassageBible(bible));
     } else {
@@ -107,9 +105,7 @@ export function fetchText(passage) {
       passage.chapter
     }${passage.verseRange && `&verseRange=${passage.verseRange}`}`;
     try {
-      const res = await axios.get(
-        `http://localhost:3001/api/passage/${queryParams}`
-      );
+      const res = await axios.get(`/api/passage/${queryParams}`);
 
       dispatch(fetchSuccess());
       dispatch(addPassageContent(res.data.content));
