@@ -6,7 +6,7 @@
   "scripts": {
     "server": "nodemon server.js",
     "start": "react-scripts start",
-    "dev": "concurrently \"npm run server\" \"npm start\""
+    "dev": "concurrently -n api,react \"npm run server\" \"npm start\""
   },
   "proxy": "http://localhost:3001",
   "dependencies": {
