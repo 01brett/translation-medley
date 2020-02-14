@@ -8,15 +8,16 @@ $white: #fff;
 $yellow: gold;
 
 // Ratios
-$xs: .25rem;
-$sm: .5rem;
+$xs: 0.25rem;
+$sm: 0.5rem;
 $md: 1rem;
 $lg: 1.5rem;
 $xl: 2rem;
 
 // Type
 $serif: 'Source Serif Pro', serif;
-$sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+$sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 
 * {
   box-sizing: border-box;
@@ -26,6 +27,39 @@ $sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubunt
 }
 
 body {
+  margin: 0;
+  padding: 0;
+}
+
+.loading {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+
+  background-color: rgba(255, 255, 255, 0.75);
+
+  span {
+    position: absolute;
+    top: 35vh;
+    left: 45vw;
+    font-size: 5rem;
+    animation: pulse 0.66s infinite ease-in-out alternate;
+    animation-iteration-count: infinite;
+  }
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(0.9);
+  }
+  to {
+    transform: scale(1.1);
+  }
+}
+
+.app {
   max-width: 48rem;
   margin: 0 auto;
   padding: 0 $md;
@@ -35,7 +69,8 @@ body {
   line-height: 1.5;
 }
 
-select, button {
+select,
+button {
   height: 2rem;
   font-family: $sans;
   padding: 0 $sm;
@@ -71,7 +106,7 @@ select {
   appearance: none;
   padding-right: $lg;
   margin-right: $sm;
-  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMCAwaDI0djI0SDB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTEyIDUuODNMMTUuMTcgOWwxLjQxLTEuNDFMMTIgMyA3LjQxIDcuNTkgOC44MyA5IDEyIDUuODN6bTAgMTIuMzRMOC44MyAxNWwtMS40MSAxLjQxTDEyIDIxbDQuNTktNC41OUwxNS4xNyAxNSAxMiAxOC4xN3oiLz48L3N2Zz4=");
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMCAwaDI0djI0SDB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTEyIDUuODNMMTUuMTcgOWwxLjQxLTEuNDFMMTIgMyA3LjQxIDcuNTkgOC44MyA5IDEyIDUuODN6bTAgMTIuMzRMOC44MyAxNWwtMS40MSAxLjQxTDEyIDIxbDQuNTktNC41OUwxNS4xNyAxNSAxMiAxOC4xN3oiLz48L3N2Zz4=');
   background-repeat: no-repeat;
   background-size: $lg;
   background-position: center right;
