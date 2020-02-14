@@ -1,5 +1,5 @@
 .verse-number {
-  user-select:none;
+  user-select: none;
   color: $grey1;
   font-family: $sans;
   font-weight: 700;
@@ -12,18 +12,30 @@
 }
 
 .verse-text {
-  user-select:none;
+  user-select: none;
   z-index: 2;
-  
+
   &:hover {
     cursor: pointer;
     background-color: $yellow;
   }
 
-  &:active, &:focus, & > .active {
+  &:active,
+  &:focus,
+  & > .active {
     background-color: $black;
     color: $white;
   }
 }
 
-.swapped { background-color: $grey-bg;}
+.swapped {
+  background-color: $grey-bg;
+}
+
+.empty {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: $lg $xl;
+  border: 1px solid $grey3;
+  border-radius: $sm;
+}
