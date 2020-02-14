@@ -1,0 +1,19 @@
+.verse-swapper {
+  display: inline-block;
+
+  .controls {
+    display: flex;
+    padding: $sm;
+    background-color: $grey-bg;
+    border-radius: $sm;
+    box-shadow: 0 0 0 0.75px $grey2, 0 $xs $sm 0 $grey1;
+
+    select, button {
+      background-color: $white;
+    }
+
+    button:first-child {
+      margin-right: $xl;
+    }
+  }
+}

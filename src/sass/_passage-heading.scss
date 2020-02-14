@@ -1,0 +1,11 @@
+.heading {
+  margin-bottom: $md;
+  
+  .title {
+    margin-bottom: $sm;
+  }
+  .controls {
+    display: flex;
+    justify-content: space-between;
+  }
+}

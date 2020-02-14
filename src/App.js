@@ -1,91 +1,89 @@
-import React from 'react';
-import { shallowEqual, useSelector, useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { shallowEqual, useSelector } from 'react-redux';
 
-import {
-  fetchVerse, fetchNETVerse, fetchESVVerse
-} from './actions/verseActions';
-
-import {
-  fetchPassage, fetchNETPassage, fetchESVPassage
-} from './actions/passageActions';
-
-import Controls from './components/Controls';
+import Header from './components/Header';
+import PassageHeading from './components/PassageHeading';
 import Verse from './components/Verse';
-// import Search from './components/Search';
+import VerseSwapper from './components/VerseSwapper';
 
 const App = () => {
-  const { passage } =  useSelector(state => ({
-    passage: state.passage,
-  }), shallowEqual);
+  const { isToggled, isFetching, content, passage, swapped } = useSelector(
+    state => ({
+      isFetching: state.isFetching,
+      isToggled: state.isToggled,
+      content: state.content,
+      passage: state.passage,
+      swapped: state.swapped
+    }),
+    shallowEqual
+  );
 
-  const dispatch = useDispatch();
+  const [verseToSwap, setVerseToSwap] = useState('');
 
-  const getPassage = bible => {
-    switch (bible) {
-      case 'NET':
-        dispatch(
-          fetchNETPassage(`${passage.book} ${passage.chapter}`)
-        );
-        break;
-      case 'ESV':
-        dispatch(
-          fetchESVPassage(`${passage.book}+${passage.chapter}`)
-        );
-        break;
-      default:
-        dispatch(
-          fetchPassage(bible, `${passage.book} ${passage.chapter}`)
-        );
-        break;
-    }
-  }
+  const allVerses = bible => {
+    return content[bible][passage.book][passage.chapter].allVerses;
+  };
 
-  const getVerse = (bible, verse) => {
-    switch (bible) {
-      case 'NET':
-        dispatch(
-          fetchNETVerse(`${passage.book} ${passage.chapter}.${verse}`)
-        );
-        break;
-      case 'ESV':
-        dispatch(
-          fetchESVVerse(`${passage.book}+${passage.chapter}:${verse}`)
-        );
-        break;
-      default:
-        dispatch(
-          fetchVerse(bible, `${passage.book} ${passage.chapter}.${verse}`)
-        );
-        break;
-    }
-  }
+  const verses = bible => {
+    return content[bible][passage.book][passage.chapter].verses;
+  };
+
+  const position = () => {
+    const v = document.querySelector(`#verse-${verseToSwap}`);
+    const vPos = v.getClientRects()[v.getClientRects().length - 1].bottom;
+
+    return {
+      position: 'absolute',
+      top: vPos + 4 + 'px',
+      marginLeft: '-15.15rem',
+      left: '50%'
+    };
+  };
 
   return (
-    <div className="app">
-      {passage && (
-        <>
-          <h1>Bible Translation Medley</h1>
-          {/* <Search /> */}
-          <div className='locator'>
-            <h3>{passage.book} {passage.chapter} ({passage.bible})</h3>
-            <Controls
-              onButton={getPassage}
-              buttonText='Swap'
-            />
-          </div>
-          <div className="verses">
-            {passage.content.map(verse => (
+    <>
+      {isFetching && <Loading />}
+      <div className="app">
+        <Header />
+        <PassageHeading />
+        <p className="verses">
+          {allVerses(passage.bible).map(num => {
+            const swap = swapped.find(({ verse }) => verse === num);
+
+            const isSwap = swap ? swap.bible : passage.bible;
+
+            return (
               <Verse
-                key={verse.verse}
-                verse={verse}
-                getVerse={getVerse}
+                active={isToggled && num === verseToSwap}
+                key={num}
+                verseBible={isSwap}
+                verseNum={num}
+                text={verses(isSwap)[num]}
+                verseToSwap={setVerseToSwap}
               />
-            ))}
-          </div>
-        </>
-      )}
+            );
+          })}
+        </p>
+        {isToggled && (
+          <VerseSwapper
+            position={position()}
+            verseNum={verseToSwap}
+            verseToSwap={setVerseToSwap}
+          />
+        )}
+      </div>
+    </>
+  );
+};
+
+export default App;
+
+function Loading() {
+  return (
+    <div className="loading">
+      <span role="img" aria-label="cartoon book opened and spread flat">
+        📖
+      </span>
     </div>
   );
 }
-
-export default App;

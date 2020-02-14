@@ -1,55 +1,42 @@
-import React, { useState } from 'react';
-import { shallowEqual, useSelector } from 'react-redux';
+import React from 'react';
+import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
-import Controls from './Controls';
+import { showVerseControls } from '../actions/actions';
 
-export default function(props){
-  const { passage } =  useSelector(state => ({
-    passage: state.passage,
-  }), shallowEqual);
+export default function({ verseNum, verseBible, text, verseToSwap, active }) {
+  const { isToggled, passageBible } = useSelector(
+    state => ({
+      isToggled: state.isToggled,
+      passageBible: state.passage.bible
+    }),
+    shallowEqual
+  );
 
-  const [isVerseSwapping, setIsVerseSwapping] = useState(false)
+  const dispatch = useDispatch();
 
-  const handleVerseSwap = () => {
-    setIsVerseSwapping(prev => !prev);
-  }
+  const handleClick = () => {
+    verseToSwap(verseNum);
+    !isToggled && dispatch(showVerseControls());
+  };
 
-  const getVerse = bible => {
-    props.getVerse(bible, props.verse.verse);
-    handleVerseSwap();
-  }
-
-  return(
-    <>
+  return (
+    <span id={`verse-${verseNum}`}>
       <span className="verse-number">
-        {' '}{props.verse.verse}{' '}
-
-        {props.verse.bible !== passage.bible && (
-          <span className="ref">({props.verse.bible}){' '}</span>
+        {' '}
+        {verseNum}{' '}
+        {verseBible !== passageBible && (
+          <span className="ref">({verseBible}) </span>
         )}
       </span>
-      
-      <span className={props.verse.bible !== passage.bible ? 'changed' : null}>
-        <span
-          className={isVerseSwapping ? 'verse active' : 'verse'}
-          onClick={handleVerseSwap}
-        >
-          {props.verse.text}
-        </span>
+
+      <span
+        className={
+          verseBible !== passageBible ? 'swapped verse-text' : 'verse-text'
+        }
+        onClick={handleClick}
+      >
+        <span className={active ? 'active' : null}>{text}</span>
       </span>
-
-      {isVerseSwapping && (
-        <div className='verse-swap'>
-          <button onClick={handleVerseSwap}>Cancel</button>
-          <Controls
-            onButton={getVerse}
-            buttonText='Swap'
-            verse={props.verse}
-          />
-        </div>
-      )}
-
-    
-    </>
+    </span>
   );
 }

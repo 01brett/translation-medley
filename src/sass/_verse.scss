@@ -1,0 +1,29 @@
+.verse-number {
+  user-select:none;
+  color: $grey1;
+  font-family: $sans;
+  font-weight: 700;
+  font-size: 65%;
+  vertical-align: top;
+
+  .ref {
+    font-weight: 500;
+  }
+}
+
+.verse-text {
+  user-select:none;
+  z-index: 2;
+  
+  &:hover {
+    cursor: pointer;
+    background-color: $yellow;
+  }
+
+  &:active, &:focus, & > .active {
+    background-color: $black;
+    color: $white;
+  }
+}
+
+.swapped { background-color: $grey-bg;}
