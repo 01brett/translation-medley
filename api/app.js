@@ -36,40 +36,26 @@ app.get(
   validation,
   whichTranslation,
   (req, res) => {
-    res.json(req.data);
+    const { passage, content } = req.data;
+
+    const formatted = {
+      passage: {
+        ...passage
+      },
+      content: {
+        [passage.bible]: {
+          [passage.book]: {
+            [passage.chapter]: {
+              allVerses: Object.keys(content),
+              verses: content
+            }
+          }
+        }
+      }
+    };
+
+    res.json(formatted);
   }
 );
 
 module.exports = app;
-/*
-
-export const addContent = (passage, content) => ({
-  type: ADD_CONTENT,
-  payload: {
-    [passage.bible]: {
-      [passage.book]: {
-        [passage.chapter]: {
-          allVerses: Object.keys(content),
-          verses: content
-        }
-      }
-    }
-  }
-})
-
-export const setContent = (passage, content) => ({
-  type: SET_CONTENT,
-  payload: {
-    [passage.bible]: {
-      [passage.book]: {
-        [passage.chapter]: {
-          allVerses: Object.keys(content),
-          verses: content
-        }
-      }
-    }
-  }
-})
-
-
-*/

@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 module.exports = (req, res, next) => {
-  const passage = req.body;
+  const passage = req.query;
   const location = `${passage.book} ${passage.chapter}:${passage.verseRange}`;
   const url = encodeURI(
     `https://cors-anywhere.herokuapp.com/http://labs.bible.org/api/?passage=${location}&type=json`

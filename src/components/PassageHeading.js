@@ -1,7 +1,11 @@
 import React from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
-import { setPassageBible, clearSwaps, hideControls } from '../actions/actions';
+import {
+  changeBible,
+  clearVerseSwaps,
+  hideVerseControls
+} from '../actions/actions';
 import BibleSwapper from './BibleSwapper';
 
 export default function() {
@@ -16,13 +20,13 @@ export default function() {
   const dispatch = useDispatch();
 
   const swap = bible => {
-    dispatch(setPassageBible(bible));
-    dispatch(hideControls());
+    dispatch(changeBible(bible));
+    dispatch(hideVerseControls());
   };
 
   const clear = () => {
-    dispatch(clearSwaps());
-    dispatch(hideControls());
+    dispatch(clearVerseSwaps());
+    dispatch(hideVerseControls());
   };
 
   return (

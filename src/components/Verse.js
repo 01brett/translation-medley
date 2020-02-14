@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
-import { showControls } from '../actions/actions';
+import { showVerseControls } from '../actions/actions';
 
 export default function({ verseNum, verseBible, text, verseToSwap, active }) {
   const { passageBible } = useSelector(
@@ -15,7 +15,7 @@ export default function({ verseNum, verseBible, text, verseToSwap, active }) {
 
   const handleClick = () => {
     verseToSwap(verseNum);
-    dispatch(showControls());
+    dispatch(showVerseControls());
   };
 
   return (

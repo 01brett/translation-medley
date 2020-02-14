@@ -3,7 +3,7 @@ const esvTranslation = require('./esvTranslation');
 const bibliaTranslation = require('./bibliaTranslation');
 
 module.exports = (req, res, next) => {
-  switch (req.body.bible) {
+  switch (req.query.bible) {
     case 'NET':
       netTranslation(req, res, next);
       break;
