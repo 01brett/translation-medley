@@ -40,7 +40,10 @@ app.get(
 
     const formatted = {
       passage: {
-        ...passage
+        bible: passage.bible,
+        book: passage.book,
+        chapter: passage.chapter,
+        verseRange: passage.verseRange ? passage.verseRange : ''
       },
       content: {
         [passage.bible]: {

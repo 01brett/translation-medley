@@ -6,8 +6,10 @@ import {
   CLEAR_VERSE_SWAPS,
   SHOW_VERSE_CONTROLS,
   HIDE_VERSE_CONTROLS,
+  SET_PASSAGE,
   SET_PASSAGE_BIBLE,
-  ADD_PASSAGE_CONTENT
+  ADD_PASSAGE_CONTENT,
+  ADD_NEW_PASSAGE_CONTENT
 } from '../actions/actions';
 
 const initState = {
@@ -78,31 +80,31 @@ const initState = {
   bibles: [
     {
       id: 'ESV',
-      display: 'English Standard Version'
+      display: 'English Standard'
     },
     {
       id: 'NET',
-      display: 'New English Bible'
+      display: 'New English'
     },
     {
       id: 'KJV',
-      display: 'King James Version'
+      display: 'King James'
     },
     {
       id: 'ASV',
-      display: 'American Standard Version'
+      display: 'American Standard'
     },
     {
       id: 'DARBY',
-      display: '1890 Darby Bible'
+      display: '1890 Darby'
     },
     {
       id: 'LEB',
-      display: 'Lexham English Bible'
+      display: 'Lexham English'
     },
     {
       id: 'YLT',
-      display: `Young's Literal Bible`
+      display: `Young's Literal`
     }
   ]
 };
@@ -157,6 +159,14 @@ export default (state = initState, action) => {
         ...state,
         isToggled: false
       };
+    case ADD_PASSAGE_CONTENT:
+      return {
+        ...state,
+        content: {
+          ...state.content,
+          ...action.payload
+        }
+      };
     case SET_PASSAGE_BIBLE:
       return {
         ...state,
@@ -165,11 +175,18 @@ export default (state = initState, action) => {
           bible: action.payload
         }
       };
-    case ADD_PASSAGE_CONTENT:
+    case SET_PASSAGE:
+      return {
+        ...state,
+        passage: {
+          ...action.payload
+        },
+        swapped: []
+      };
+    case ADD_NEW_PASSAGE_CONTENT:
       return {
         ...state,
         content: {
-          ...state.content,
           ...action.payload
         }
       };

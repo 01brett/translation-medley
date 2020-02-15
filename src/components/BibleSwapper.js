@@ -36,10 +36,7 @@ export default function(props) {
         ))}
       </select>
 
-      <button
-        onClick={buttonOnClick}
-        disabled={props.bible ? bible === props.bible : props.isBadQuery}
-      >
+      <button onClick={buttonOnClick} disabled={bible === props.bible}>
         {props.buttonText}
       </button>
     </div>

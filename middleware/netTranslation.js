@@ -1,8 +1,13 @@
 const axios = require('axios');
 
 module.exports = (req, res, next) => {
-  const passage = req.query;
-  const location = `${passage.book} ${passage.chapter}:${passage.verseRange}`;
+  const params = req.query;
+  let location;
+  if (params.verseRange) {
+    location = `${params.book} ${params.chapter}:${params.verseRange}`;
+  } else {
+    location = `${params.book} ${params.chapter}`;
+  }
   const url = encodeURI(
     `https://cors-anywhere.herokuapp.com/http://labs.bible.org/api/?passage=${location}&type=json`
   );
@@ -14,7 +19,7 @@ module.exports = (req, res, next) => {
     })
     .then(cleanText => {
       req.data = {
-        passage: passage,
+        passage: params,
         content: cleanText
       };
       next();

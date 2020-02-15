@@ -33,7 +33,8 @@ export default function() {
   return (
     <div className="heading">
       <h2 className="title">
-        {passage.book} {passage.chapter}:{passage.verseRange} ({passage.bible})
+        {passage.book} {passage.chapter}
+        {passage.verseRange && `:${passage.verseRange}`} ({passage.bible})
       </h2>
       <div className="controls">
         <button onClick={clear} disabled={swapped.length < 1}>

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
-import { changeBible } from '../actions/actions';
-import BibleSwapper from './BibleSwapper';
+import { fetchNewText } from '../actions/actions';
 
 const Search = props => {
   const { isToggled, passage } = useSelector(
@@ -13,19 +12,37 @@ const Search = props => {
     shallowEqual
   );
   const dispatch = useDispatch();
-  const [query, setQuery] = useState({});
-  const [input, setInput] = useState('');
 
-  const handleChanges = e => {
+  const initQuery = {
+    book: 'Matthew',
+    chapter: '7',
+    verseRange: ''
+  };
+
+  const [query, setQuery] = useState({
+    book: 'Matthew',
+    chapter: '7',
+    verseRange: ''
+  });
+
+  const [input, setInput] = useState('');
+  const handleInput = e => {
     setInput(e.target.value);
   };
 
-  const handleSubmit = e => {
+  const [bible, setBible] = useState('ESV');
+  const handleBible = e => {
     e.preventDefault();
-    // dispatch(addSmurf(formData));
-    // setFormData(initForm);
+    setBible(e.target.value);
   };
 
+  const handleSubmit = query => {
+    dispatch(fetchNewText({ bible: bible, ...query }));
+    setQuery(initQuery);
+    setInput('');
+  };
+
+  console.log('query •••', query);
   return (
     <div className="search">
       <div className="box">
@@ -35,16 +52,49 @@ const Search = props => {
           id="search"
           name="search"
           value={input}
-          onChange={handleChanges}
+          onChange={handleInput}
+        />
+        <Swapper
+          query={query}
+          bible={bible}
+          handleBible={handleBible}
+          handleSubmit={handleSubmit}
         />
       </div>
-      <BibleSwapper
-        isBadQuery={true}
-        buttonText="Go"
-        buttonOnClick={handleSubmit}
-      />
     </div>
   );
 };
 
 export default Search;
+
+function Swapper({ query, bible, handleBible, handleSubmit }) {
+  const { bibles } = useSelector(
+    state => ({
+      bibles: state.bibles
+    }),
+    shallowEqual
+  );
+
+  const handleClick = () => {
+    handleSubmit({
+      ...query,
+      bible: bible
+    });
+  };
+
+  return (
+    <div className="swapper">
+      <select onChange={handleBible} value={bible}>
+        {bibles.map(bible => (
+          <option key={bible.id} value={bible.id}>
+            ({bible.id}) {bible.display}
+          </option>
+        ))}
+      </select>
+
+      <button onClick={handleClick} disabled={!query}>
+        Go
+      </button>
+    </div>
+  );
+}
