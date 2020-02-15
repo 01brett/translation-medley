@@ -4,10 +4,9 @@ export const FETCH_START = 'FETCH_START';
 export const FETCH_SUCCESS = 'FETCH_SUCCESS';
 export const FETCH_FAILURE = 'FETCH_FAILURE';
 
+export const ADD_CONTENT = 'ADD_CONTENT';
+
 export const SET_PASSAGE = 'SET_PASSAGE';
-export const SET_PASSAGE_BIBLE = 'SET_PASSAGE_BIBLE';
-export const ADD_PASSAGE_CONTENT = 'ADD_PASSAGE_CONTENT';
-export const ADD_NEW_PASSAGE_CONTENT = 'ADD_NEW_PASSAGE_CONTENT';
 
 export const ADD_VERSE_SWAP = 'ADD_VERSE_SWAP';
 export const CLEAR_VERSE_SWAPS = 'CLEAR_VERSE_SWAPS';
@@ -17,28 +16,16 @@ export const HIDE_VERSE_CONTROLS = 'HIDE_VERSE_CONTROLS';
 /////////////
 // PASSAGE //
 /////////////
+export function addContent(content) {
+  return {
+    type: ADD_CONTENT,
+    payload: content
+  };
+}
 export function setPassage(passage) {
   return {
     type: SET_PASSAGE,
     payload: passage
-  };
-}
-export function setPassageBible(bible) {
-  return {
-    type: SET_PASSAGE_BIBLE,
-    payload: bible
-  };
-}
-export function addPassageContent(content) {
-  return {
-    type: ADD_PASSAGE_CONTENT,
-    payload: content
-  };
-}
-export function addNewPassageContent(content) {
-  return {
-    type: ADD_PASSAGE_CONTENT,
-    payload: content
   };
 }
 ////////////
@@ -78,83 +65,81 @@ export function fetchFailure(error) {
 /////////////////////
 // COMBO FUNCTIONS //
 /////////////////////
-export function changeBible(bible) {
-  return async (dispatch, getState) => {
+export function fetchText(passage) {
+  return async dispatch => {
+    let queryParams;
+    if (passage.verseRange) {
+      queryParams = `?bible=${passage.bible}&book=${passage.book}&chapter=${passage.chapter}&verseRange=${passage.verseRange}`;
+    } else {
+      queryParams = `?bible=${passage.bible}&book=${passage.book}&chapter=${passage.chapter}`;
+    }
     try {
-      const { content, passage } = getState();
-
-      if (content.hasOwnProperty(bible)) {
-        dispatch(setPassageBible(bible));
-      } else {
-        const res = await dispatch(
-          fetchText({
-            ...passage,
-            bible: bible
-          })
-        );
-        dispatch(setPassageBible(res.passage.bible));
-      }
-    } catch (err) {
-      console.log('changeBible •••', err);
+      dispatch(fetchStart());
+      const res = await axios.get(`/api/passage/${queryParams}`);
+      return res.data;
+    } catch (error) {
+      dispatch(fetchFailure(error));
     }
   };
 }
 
-export function handleVerseSwap(verse) {
+export function getDiffBible(bible) {
   return async (dispatch, getState) => {
+    const { content, passage } = getState();
     try {
-      const { content, passage } = getState();
+      if (
+        content.hasOwnProperty(bible) &&
+        content[bible].hasOwnProperty(passage.book)
+      ) {
+        dispatch(setPassage({ ...passage, bible: bible }));
+      } else {
+        const res = await dispatch(fetchText({ ...passage, bible: bible }));
+        dispatch(addContent(res));
+        dispatch(setPassage(res.passage));
+        dispatch(fetchSuccess());
+      }
+    } catch (err) {
+      console.log('\nswapBible •••', err, '\n\n');
+    }
+  };
+}
 
+export function getDiffVerse(verse) {
+  return async (dispatch, getState) => {
+    const { content, passage } = getState();
+    try {
       if (!content.hasOwnProperty(verse.bible)) {
-        await dispatch(
-          fetchText({
-            ...passage,
-            bible: verse.bible
-          })
+        const res = await dispatch(
+          fetchText({ ...passage, bible: verse.bible })
         );
+        dispatch(addContent(res));
+        dispatch(fetchSuccess());
       }
       dispatch(addVerseSwap(verse));
     } catch (err) {
-      console.log('changeBible •••', err);
+      console.log('\nswapVerse •••', err, '\n\n');
     }
   };
 }
 
-export function fetchText(passage) {
-  return async dispatch => {
-    dispatch(fetchStart());
-    const queryParams = `?bible=${passage.bible}&book=${passage.book}&chapter=${
-      passage.chapter
-    }${passage.verseRange && `&verseRange=${passage.verseRange}`}`;
-
+export function getDiffPassage(passageQuery) {
+  return async (dispatch, getState) => {
+    const { content } = getState();
     try {
-      const res = await axios.get(`/api/passage/${queryParams}`);
-      dispatch(fetchSuccess());
-      dispatch(addPassageContent(res.data.content));
-      return res.data;
-    } catch (error) {
-      console.log('Fetch', error);
-      dispatch(fetchFailure(error));
-    }
-  };
-}
-
-export function fetchNewText(passage) {
-  return async dispatch => {
-    dispatch(fetchStart());
-    const queryParams = `?bible=${passage.bible}&book=${passage.book}&chapter=${
-      passage.chapter
-    }${passage.verseRange && `&verseRange=${passage.verseRange}`}`;
-
-    try {
-      const res = await axios.get(`/api/passage/${queryParams}`);
-      dispatch(setPassage(res.data.passage));
-      dispatch(addNewPassageContent(res.data.content));
-      dispatch(fetchSuccess());
-      return res.data;
-    } catch (error) {
-      console.log('Fetch New Text', error);
-      dispatch(fetchFailure(error));
+      if (
+        content.hasOwnProperty(passageQuery.bible) &&
+        content[passageQuery.bible].hasOwnProperty(passageQuery.book)
+      ) {
+        dispatch(setPassage({ ...passageQuery, bible: passageQuery.bible }));
+      } else {
+        const res = await dispatch(fetchText(passageQuery));
+        dispatch(clearVerseSwaps());
+        dispatch(addContent(res));
+        dispatch(setPassage(res.passage));
+        dispatch(fetchSuccess());
+      }
+    } catch (err) {
+      console.log('\nswapPassage •••', err, '\n\n');
     }
   };
 }

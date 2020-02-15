@@ -2,7 +2,7 @@ import React from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
 import BibleSwapper from './BibleSwapper';
-import { handleVerseSwap, hideVerseControls } from '../actions/actions';
+import { getDiffVerse, hideVerseControls } from '../actions/actions';
 
 export default function(props) {
   const { isToggled, passage, swapped } = useSelector(
@@ -17,14 +17,14 @@ export default function(props) {
   const dispatch = useDispatch();
 
   const swap = bible => {
+    isToggled && dispatch(hideVerseControls());
+    props.verseToSwap('');
     dispatch(
-      handleVerseSwap({
+      getDiffVerse({
         verse: props.verseNum,
         bible: bible
       })
     );
-    isToggled && dispatch(hideVerseControls());
-    props.verseToSwap('');
   };
 
   const cancel = () => {

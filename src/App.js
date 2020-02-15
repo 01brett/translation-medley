@@ -52,7 +52,7 @@ const App = () => {
         <Header />
         <Search />
         {!passage.bible && <Empty />}
-        {!isFetching && passage.bible && content[passage.bible] && (
+        {passage.book && content[passage.bible][passage.book] && (
           <>
             <PassageHeading />
             <p className="verses">

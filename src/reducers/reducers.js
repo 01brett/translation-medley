@@ -7,9 +7,7 @@ import {
   SHOW_VERSE_CONTROLS,
   HIDE_VERSE_CONTROLS,
   SET_PASSAGE,
-  SET_PASSAGE_BIBLE,
-  ADD_PASSAGE_CONTENT,
-  ADD_NEW_PASSAGE_CONTENT
+  ADD_CONTENT
 } from '../actions/actions';
 
 const initState = {
@@ -134,19 +132,20 @@ export default (state = initState, action) => {
         swapped: []
       };
     case ADD_VERSE_SWAP:
-      if (state.swapped.find(({ verse }) => verse === action.payload.verse)) {
+      const data = action.payload;
+      if (state.swapped.find(({ verse }) => verse === data.verse)) {
         return {
           ...state,
           swapped: [
-            ...state.swapped.map(el =>
-              el.verse === action.payload.verse ? action.payload : el
+            ...state.swapped.map(swap =>
+              swap.verse === data.verse ? data : swap
             )
           ]
         };
       } else {
         return {
           ...state,
-          swapped: [...state.swapped, action.payload]
+          swapped: [...state.swapped, data]
         };
       }
     case SHOW_VERSE_CONTROLS:
@@ -159,36 +158,23 @@ export default (state = initState, action) => {
         ...state,
         isToggled: false
       };
-    case ADD_PASSAGE_CONTENT:
+    case ADD_CONTENT:
+      const psg = action.payload.passage;
+      const cnt = action.payload.content;
       return {
         ...state,
         content: {
           ...state.content,
-          ...action.payload
-        }
-      };
-    case SET_PASSAGE_BIBLE:
-      return {
-        ...state,
-        passage: {
-          ...state.passage,
-          bible: action.payload
+          [psg.bible]: {
+            ...state.content[psg.bible],
+            ...cnt[psg.bible]
+          }
         }
       };
     case SET_PASSAGE:
       return {
         ...state,
-        passage: {
-          ...action.payload
-        },
-        swapped: []
-      };
-    case ADD_NEW_PASSAGE_CONTENT:
-      return {
-        ...state,
-        content: {
-          ...action.payload
-        }
+        passage: action.payload
       };
     default:
       return state;

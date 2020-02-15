@@ -43,7 +43,7 @@ app.get(
         bible: passage.bible,
         book: passage.book,
         chapter: passage.chapter,
-        verseRange: passage.verseRange ? passage.verseRange : ''
+        verseRange: passage.verseRange
       },
       content: {
         [passage.bible]: {
@@ -56,6 +56,13 @@ app.get(
         }
       }
     };
+
+    if (!passage.verseRange) {
+      let allV =
+        formatted.content[passage.bible][passage.book][passage.chapter]
+          .allVerses;
+      formatted.passage.verseRange = `${allV[0]}-${allV[allV.length - 1]}`;
+    }
 
     res.json(formatted);
   }

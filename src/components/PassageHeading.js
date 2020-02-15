@@ -2,7 +2,7 @@ import React from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
 import {
-  changeBible,
+  getDiffBible,
   clearVerseSwaps,
   hideVerseControls
 } from '../actions/actions';
@@ -21,13 +21,13 @@ export default function() {
   const dispatch = useDispatch();
 
   const swap = bible => {
-    dispatch(changeBible(bible));
     isToggled && dispatch(hideVerseControls());
+    dispatch(getDiffBible(bible));
   };
 
   const clear = () => {
-    dispatch(clearVerseSwaps());
     isToggled && dispatch(hideVerseControls());
+    dispatch(clearVerseSwaps());
   };
 
   return (
