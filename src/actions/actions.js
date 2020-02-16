@@ -135,13 +135,13 @@ export function getDiffPassage(query) {
     const { content, passage, swapped } = getState();
     try {
       if (JSON.stringify(passage) !== JSON.stringify(query)) {
-        const compareVerse = query.verseRange.split('-');
+        const cVrs = query.verseRange.split('-');
         if (
           content.hasOwnProperty(query.bible) &&
           content[query.bible].hasOwnProperty(query.book) &&
           content[query.bible][query.book].hasOwnProperty(query.chapter)
           // && content[query.bible][query.book][query.chapter].allVerses.includes(
-          //   compareVerse[compareVerse.length - 1])
+          //   cVrs[cVrs.length - 1])
         ) {
           dispatch(setPassage({ ...query, bible: query.bible }));
         } else {

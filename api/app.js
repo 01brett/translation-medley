@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const { check } = require('express-validator');
 const validation = require('../middleware/validation');
 const whichTranslation = require('../middleware/whichTranslation');
+const books = require('../middleware/books');
 const app = express.Router();
 
 app.use(cors());
@@ -38,16 +39,25 @@ app.get(
   (req, res) => {
     const { passage, content } = req.data;
 
+    const psgBook = books.reduce((acc, cVal) => {
+      const psgLow = passage.book.toLowerCase();
+      const bkLow = cVal.toLowerCase();
+      if (psgLow === bkLow) {
+        acc = cVal;
+      }
+      return acc;
+    }, '');
+
     const formatted = {
       passage: {
         bible: passage.bible,
-        book: passage.book,
+        book: psgBook,
         chapter: passage.chapter,
         verseRange: passage.verseRange
       },
       content: {
         [passage.bible]: {
-          [passage.book]: {
+          [psgBook]: {
             [passage.chapter]: {
               allVerses: Object.keys(content).map(el => Number(el)),
               verses: content
