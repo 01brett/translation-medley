@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
-import { getDiffPassage } from '../actions/actions';
+import lookup from '../helpers/lookup';
+import { getDiffPassage, hideVerseControls } from '../actions/actions';
 import Swapper from './Swapper';
 
-const Search = props => {
+const Search = () => {
   const { isToggled, passage } = useSelector(
     state => ({
       isToggled: state.isToggled,
@@ -14,32 +15,47 @@ const Search = props => {
   );
   const dispatch = useDispatch();
 
-  const initQuery = {
-    book: 'Matthew',
-    chapter: '7',
-    verseRange: '1-9'
-  };
-
+  const [typed, setTyped] = useState('');
   const [query, setQuery] = useState({
-    book: 'Matthew',
-    chapter: '7',
-    verseRange: '1-9'
+    book: '',
+    chapter: '',
+    verseRange: ''
   });
 
-  const [input, setInput] = useState('');
   const handleInput = e => {
-    setInput(e.target.value);
+    const str = e.target.value;
+    setTyped(str);
+
+    const bk = str.match(/(^.+)(?=\s\d)/i);
+    const ch = str.match(/(?<=\s)\d+|\d+(?=:)/i);
+    const vr = str.match(/(?<=:)(\d+-?\d+|\d+)/i);
+
+    let queryStr;
+    if (vr) {
+      queryStr = {
+        book: bk && bk[0],
+        chapter: ch && ch[0],
+        verseRange: vr && vr[0]
+      };
+    } else {
+      queryStr = {
+        book: bk && bk[0],
+        chapter: ch && ch[0],
+        verseRange: ''
+      };
+    }
+
+    setQuery(queryStr);
   };
 
-  const [bible, setBible] = useState('ESV');
+  const [bible, setBible] = useState(passage.bible || 'ESV');
 
-  const handleSubmit = query => {
+  const handleSearch = () => {
+    console.log('whole query •••', { bible: bible, ...query });
+    isToggled && dispatch(hideVerseControls());
     dispatch(getDiffPassage({ bible: bible, ...query }));
-    setQuery(initQuery);
-    setInput('');
   };
 
-  // console.log('query •••', query);
   return (
     <div className="search">
       <div className="box">
@@ -47,16 +63,16 @@ const Search = props => {
           type="text"
           id="search"
           name="search"
-          value={input}
+          value={typed}
           onChange={handleInput}
         />
       </div>
-      <Swapper
-        query={query}
-        bible={bible}
-        setBible={setBible}
-        handleSubmit={handleSubmit}
-      />
+      <div className="swapper">
+        <Swapper bible={bible} setBible={setBible} />
+        <button onClick={handleSearch} disabled={!query.book && !query.chapter}>
+          Go
+        </button>
+      </div>
     </div>
   );
 };

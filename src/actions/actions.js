@@ -93,13 +93,18 @@ export function getDiffBible(bible) {
       ) {
         dispatch(setPassage({ ...passage, bible: bible }));
       } else {
-        const res = await dispatch(fetchText({ ...passage, bible: bible }));
+        let res;
+        try {
+          res = await dispatch(fetchText({ ...passage, bible: bible }));
+        } catch (err) {
+          console.log('\ngetDiffBible fetch •••', err, '\n\n');
+        }
         dispatch(addContent(res));
         dispatch(setPassage(res.passage));
         dispatch(fetchSuccess());
       }
     } catch (err) {
-      console.log('\nswapBible •••', err, '\n\n');
+      console.log('\ngetDiffBible •••', err, '\n\n');
     }
   };
 }
@@ -108,38 +113,59 @@ export function getDiffVerse(verse) {
   return async (dispatch, getState) => {
     const { content, passage } = getState();
     try {
+      let res;
       if (!content.hasOwnProperty(verse.bible)) {
-        const res = await dispatch(
-          fetchText({ ...passage, bible: verse.bible })
-        );
+        try {
+          res = await dispatch(fetchText({ ...passage, bible: verse.bible }));
+        } catch (err) {
+          console.log('\ngetDiffVerse fetch •••', err, '\n\n');
+        }
         dispatch(addContent(res));
         dispatch(fetchSuccess());
       }
       dispatch(addVerseSwap(verse));
     } catch (err) {
-      console.log('\nswapVerse •••', err, '\n\n');
+      console.log('\ngetDiffVerse •••', err, '\n\n');
     }
   };
 }
 
-export function getDiffPassage(passageQuery) {
+export function getDiffPassage(query) {
   return async (dispatch, getState) => {
-    const { content } = getState();
+    const { content, passage, swapped } = getState();
     try {
-      if (
-        content.hasOwnProperty(passageQuery.bible) &&
-        content[passageQuery.bible].hasOwnProperty(passageQuery.book)
-      ) {
-        dispatch(setPassage({ ...passageQuery, bible: passageQuery.bible }));
+      if (JSON.stringify(passage) !== JSON.stringify(query)) {
+        const compareVerse = query.verseRange.split('-');
+        if (
+          content.hasOwnProperty(query.bible) &&
+          content[query.bible].hasOwnProperty(query.book) &&
+          content[query.bible][query.book].hasOwnProperty(query.chapter)
+          // && content[query.bible][query.book][query.chapter].allVerses.includes(
+          //   compareVerse[compareVerse.length - 1])
+        ) {
+          dispatch(setPassage({ ...query, bible: query.bible }));
+        } else {
+          let res;
+          try {
+            res = await dispatch(fetchText(query));
+          } catch (err) {
+            console.log('\ngetDiffPassage fetch •••', err, '\n\n');
+          }
+          if (
+            (swapped.length > 0 && passage.book !== res.passage.book) ||
+            (swapped.length > 0 && passage.chapter !== res.passage.chapter)
+          ) {
+            dispatch(clearVerseSwaps());
+          }
+          dispatch(addContent(res));
+          dispatch(setPassage(res.passage));
+          dispatch(fetchSuccess());
+        }
       } else {
-        const res = await dispatch(fetchText(passageQuery));
-        dispatch(clearVerseSwaps());
-        dispatch(addContent(res));
-        dispatch(setPassage(res.passage));
-        dispatch(fetchSuccess());
+        console.log('Nothing new to fetch or set •••');
       }
     } catch (err) {
-      console.log('\nswapPassage •••', err, '\n\n');
+      console.log('\ngetDiffPassage •••', err, '\n\n');
     }
   };
 }

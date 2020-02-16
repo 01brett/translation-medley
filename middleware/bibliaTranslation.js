@@ -11,6 +11,7 @@ module.exports = (req, res, next) => {
   const url = encodeURI(
     `https://cors-anywhere.herokuapp.com/https://api.biblia.com/v1/bible/content/${params.bible}.json?passage=${location}&style=oneVersePerLine&key=${process.env.BIBLIA}`
   );
+
   axios
     .get(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
     .then(res => {

@@ -20,7 +20,7 @@ export default function({ verseNum, verseBible, text, verseToSwap, active }) {
   };
 
   return (
-    <span id={`verse-${verseNum}`}>
+    <span className="verse" id={`verse-${verseNum}`}>
       <span className="verse-number">
         {' '}
         {verseNum}{' '}

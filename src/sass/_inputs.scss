@@ -11,8 +11,8 @@ button {
 
   &:hover {
     cursor: pointer;
-    background-color: $grey3;
     border-color: $black;
+    box-shadow: 0 0 0 2px rgba($black, 0.25);
   }
   &:active {
     background-color: $grey2;
@@ -28,6 +28,7 @@ button {
     color: $grey2;
     border-color: $grey3;
     background-color: $grey3;
+    box-shadow: none;
   }
 }
 

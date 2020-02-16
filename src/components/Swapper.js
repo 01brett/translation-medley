@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
-export default function Swapper({ query, bible, setBible, handleSubmit }) {
+export default function Swapper({ bible, setBible }) {
   const { bibles } = useSelector(
     state => ({
       bibles: state.bibles
@@ -13,26 +13,13 @@ export default function Swapper({ query, bible, setBible, handleSubmit }) {
     setBible(e.target.value);
   };
 
-  const handleClick = () => {
-    handleSubmit({
-      ...query,
-      bible: bible
-    });
-  };
-
   return (
-    <div className="swapper">
-      <select onChange={handleSwapper} value={bible}>
-        {bibles.map(bible => (
-          <option key={bible.id} value={bible.id}>
-            ({bible.id}) {bible.display}
-          </option>
-        ))}
-      </select>
-
-      <button onClick={handleClick} disabled={!query}>
-        FIND
-      </button>
-    </div>
+    <select onChange={handleSwapper} value={bible}>
+      {bibles.map(bible => (
+        <option key={bible.id} value={bible.id}>
+          ({bible.id}) {bible.display}
+        </option>
+      ))}
+    </select>
   );
 }

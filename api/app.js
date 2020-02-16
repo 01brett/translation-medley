@@ -57,11 +57,15 @@ app.get(
       }
     };
 
-    if (!passage.verseRange) {
+    if (passage.verseRange) {
       let allV =
         formatted.content[passage.bible][passage.book][passage.chapter]
           .allVerses;
-      formatted.passage.verseRange = `${allV[0]}-${allV[allV.length - 1]}`;
+      if (allV.length > 1) {
+        formatted.passage.verseRange = `${allV[0]}-${allV[allV.length - 1]}`;
+      } else {
+        formatted.passage.verseRange = `${allV[0]}`;
+      }
     }
 
     res.json(formatted);

@@ -15,65 +15,69 @@ const initState = {
   isFetching: false,
   error: '',
   content: {
-    NET: {
-      Philippians: {
-        '1': {
-          allVerses: [1, 2, 3, 4, 5, 6, 7],
-          verses: {
-            '1':
-              'From Paul and Timothy, slaves of Christ Jesus, to all the saints in Christ Jesus who are in Philippi, with the overseers and deacons.',
-            '2':
-              'Grace and peace to you from God our Father and the Lord Jesus Christ!',
-            '3': 'I thank my God every time I remember you.',
-            '4': 'I always pray with joy in my every prayer for all of you',
-            '5':
-              'because of your participation in the gospel from the first day until now.',
-            '6':
-              'For I am sure of this very thing, that the one who began a good work in you will perfect it until the day of Christ Jesus.',
-            '7':
-              'For it is right for me to think this about all of you, because I have you in my heart, since both in my imprisonment and in the defense and confirmation of the gospel all of you became partners in God’s grace together with me.'
-          }
-        }
-      }
-    },
-    ESV: {
-      Philippians: {
-        '1': {
-          allVerses: [1, 2, 3, 4, 5, 6, 7],
-          verses: {
-            '1':
-              ' Paul and Timothy, servants of Christ Jesus, To all the saints in Christ Jesus who are at Philippi, with the overseers and deacons:',
-            '2':
-              ' Grace to you and peace from God our Father and the Lord Jesus Christ.',
-            '3': ' I thank my God in all my remembrance of you,',
-            '4':
-              ' always in every prayer of mine for you all making my prayer with joy,',
-            '5':
-              ' because of your partnership in the gospel from the first day until now.',
-            '6':
-              ' And I am sure of this, that he who began a good work in you will bring it to completion at the day of Jesus Christ.',
-            '7':
-              ' It is right for me to feel this way about you all, because I hold you in my heart, for you are all partakers with me of grace, both in my imprisonment and in the defense and confirmation of the gospel.'
-          }
-        }
-      }
-    }
+    // NET: {
+    //   Philippians: {
+    //     '1': {
+    //       allVerses: [1, 2, 3, 4, 5, 6, 7],
+    //       verses: {
+    //         '1':
+    //           'From Paul and Timothy, slaves of Christ Jesus, to all the saints in Christ Jesus who are in Philippi, with the overseers and deacons.',
+    //         '2':
+    //           'Grace and peace to you from God our Father and the Lord Jesus Christ!',
+    //         '3': 'I thank my God every time I remember you.',
+    //         '4': 'I always pray with joy in my every prayer for all of you',
+    //         '5':
+    //           'because of your participation in the gospel from the first day until now.',
+    //         '6':
+    //           'For I am sure of this very thing, that the one who began a good work in you will perfect it until the day of Christ Jesus.',
+    //         '7':
+    //           'For it is right for me to think this about all of you, because I have you in my heart, since both in my imprisonment and in the defense and confirmation of the gospel all of you became partners in God’s grace together with me.'
+    //       }
+    //     }
+    //   }
+    // },
+    // ESV: {
+    //   Philippians: {
+    //     '1': {
+    //       allVerses: [1, 2, 3, 4, 5, 6, 7],
+    //       verses: {
+    //         '1':
+    //           ' Paul and Timothy, servants of Christ Jesus, To all the saints in Christ Jesus who are at Philippi, with the overseers and deacons:',
+    //         '2':
+    //           ' Grace to you and peace from God our Father and the Lord Jesus Christ.',
+    //         '3': ' I thank my God in all my remembrance of you,',
+    //         '4':
+    //           ' always in every prayer of mine for you all making my prayer with joy,',
+    //         '5':
+    //           ' because of your partnership in the gospel from the first day until now.',
+    //         '6':
+    //           ' And I am sure of this, that he who began a good work in you will bring it to completion at the day of Jesus Christ.',
+    //         '7':
+    //           ' It is right for me to feel this way about you all, because I hold you in my heart, for you are all partakers with me of grace, both in my imprisonment and in the defense and confirmation of the gospel.'
+    //       }
+    //     }
+    //   }
+    // }
   },
   passage: {
-    bible: 'ESV',
-    book: 'Philippians',
-    chapter: '1',
-    verseRange: '1–7'
+    bible: '',
+    book: '',
+    chapter: '',
+    verseRange: ''
+    // bible: 'ESV',
+    // book: 'Philippians',
+    // chapter: '1',
+    // verseRange: '1-7'
   },
   swapped: [
-    {
-      verse: 3,
-      bible: 'NET'
-    },
-    {
-      verse: 6,
-      bible: 'NET'
-    }
+    // {
+    //   verse: 3,
+    //   bible: 'NET'
+    // },
+    // {
+    //   verse: 6,
+    //   bible: 'NET'
+    // }
   ],
   bibles: [
     {
