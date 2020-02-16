@@ -1,12 +1,7 @@
 import React from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
-import {
-  getDiffBible,
-  clearVerseSwaps,
-  hideVerseControls
-} from '../actions/actions';
-import BibleSwapper from './BibleSwapper';
+import { clearVerseSwaps, hideVerseControls } from '../actions/actions';
 
 export default function() {
   const { isToggled, passage, swapped } = useSelector(
@@ -20,11 +15,6 @@ export default function() {
 
   const dispatch = useDispatch();
 
-  const swap = bible => {
-    isToggled && dispatch(hideVerseControls());
-    dispatch(getDiffBible(bible));
-  };
-
   const clear = () => {
     isToggled && dispatch(hideVerseControls());
     dispatch(clearVerseSwaps());
@@ -36,16 +26,9 @@ export default function() {
         {passage.book} {passage.chapter}
         {passage.verseRange && `:${passage.verseRange}`} ({passage.bible})
       </h2>
-      <div className="controls">
-        <button onClick={clear} disabled={swapped.length < 1}>
-          Clear
-        </button>
-        <BibleSwapper
-          bible={passage.bible}
-          buttonText="Swap"
-          buttonOnClick={swap}
-        />
-      </div>
+      <button onClick={clear} disabled={swapped.length < 1}>
+        Clear Swaps
+      </button>
     </div>
   );
 }

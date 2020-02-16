@@ -26,34 +26,6 @@ $sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
   margin: 0;
 }
 
-.loading {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-
-  background-color: rgba(255, 255, 255, 0.75);
-
-  span {
-    position: absolute;
-    top: 35vh;
-    left: 45vw;
-    font-size: 5rem;
-    animation: pulse 0.66s infinite ease-in-out alternate;
-    animation-iteration-count: infinite;
-  }
-}
-
-@keyframes pulse {
-  from {
-    transform: scale(0.9);
-  }
-  to {
-    transform: scale(1.1);
-  }
-}
-
 .app {
   max-width: 48rem;
   margin: 0 auto;
@@ -62,47 +34,4 @@ $sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
   font-family: $serif;
   font-size: 1.15rem;
   line-height: 1.5;
-}
-
-select,
-button {
-  height: 2rem;
-  font-family: $sans;
-  padding: 0 $sm;
-  color: $black;
-  background-color: $grey-bg;
-  border: 1px solid $grey1;
-  outline: none;
-  border-radius: $xs;
-
-  &:hover {
-    cursor: pointer;
-    background-color: $grey3;
-    border-color: $black;
-  }
-  &:active {
-    background-color: $grey2;
-    border-color: $black;
-  }
-  &:focus {
-    border-color: $black;
-    box-shadow: 0 0 0 $xs $yellow;
-  }
-
-  &[disabled] {
-    cursor: not-allowed;
-    color: $grey2;
-    border-color: $grey3;
-    background-color: $grey3;
-  }
-}
-
-select {
-  appearance: none;
-  padding-right: $lg;
-  margin-right: $sm;
-  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMCAwaDI0djI0SDB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTEyIDUuODNMMTUuMTcgOWwxLjQxLTEuNDFMMTIgMyA3LjQxIDcuNTkgOC44MyA5IDEyIDUuODN6bTAgMTIuMzRMOC44MyAxNWwtMS40MSAxLjQxTDEyIDIxbDQuNTktNC41OUwxNS4xNyAxNSAxMiAxOC4xN3oiLz48L3N2Zz4=');
-  background-repeat: no-repeat;
-  background-size: $lg;
-  background-position: center right;
 }

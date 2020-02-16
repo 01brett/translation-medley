@@ -25,7 +25,7 @@ export default function({ verseNum, verseBible, text, verseToSwap, active }) {
         {' '}
         {verseNum}{' '}
         {verseBible !== passageBible && (
-          <span className="ref">({verseBible}) </span>
+          <span className="ref">{verseBible} </span>
         )}
       </span>
 

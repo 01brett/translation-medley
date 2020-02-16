@@ -1,11 +1,10 @@
 .heading {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
   margin-bottom: $md;
-  
+
   .title {
     margin-bottom: $sm;
-  }
-  .controls {
-    display: flex;
-    justify-content: space-between;
   }
 }

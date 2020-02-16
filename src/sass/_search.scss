@@ -49,8 +49,19 @@
   .swapper {
     flex: 1 100%;
     align-self: flex-end;
+
     @media (min-width: 669px) {
       flex: 0 auto;
+    }
+
+    select {
+      width: 100%;
+      margin-bottom: $sm;
+
+      @media (min-width: 352px) {
+        width: auto;
+        margin-bottom: 0;
+      }
     }
     select,
     button {
