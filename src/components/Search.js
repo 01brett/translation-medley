@@ -126,11 +126,11 @@ const Search = () => {
       setQuery(queryStr);
     }
   };
-  console.log('query ···', query);
   const [bible, setBible] = useState(passage.bible || 'ESV');
 
   const handleSearch = () => {
     console.log('search query ···', { bible: bible, ...query });
+    setTyped(`${query.book} ${query.chapter}`);
     setShowFlyout(false);
     isToggled && dispatch(hideVerseControls());
     dispatch(getDiffPassage({ bible: bible, ...query }));
