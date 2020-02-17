@@ -115,10 +115,6 @@
         background-color: $grey-bg;
       }
     }
-
-    .active {
-      background-color: $yellow;
-    }
     .disabled {
       p {
         &:hover {
@@ -128,4 +124,7 @@
       }
     }
   }
+}
+.active {
+  background-color: $yellow;
 }

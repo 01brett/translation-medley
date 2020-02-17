@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
 import lookup from '../helpers/lookup';
-import search from '../helpers/search';
 import books from '../helpers/books';
 import { getDiffPassage, hideVerseControls } from '../actions/actions';
 import Swapper from './Swapper';
@@ -97,28 +96,37 @@ const Search = () => {
       setQuery(initQ);
       setShowFlyout(true);
     } else {
-      const ch = str.match(/(?<=\s)\d+|\d+(?=:)/i);
+      const ch = str.match(/(?<=\s|\s*0)([1-9]\d*)/i);
       // const vr = str.match(/(?<=:)(\d+-?\d+|\d+)/i);
+      const chap = ch ? ch[0] : '';
+      const chapterList = Object.keys(lookup[query.book]);
 
       let queryStr;
-      // if (vr) {
-      //   queryStr = {
-      //     ...query,
-      //     chapter: ch ? ch[0] : '',
-      //     verseRange: vr && vr[0]
-      //   };
-      // } else {
-      queryStr = {
-        ...query,
-        chapter: ch ? ch[0] : '',
-        verseRange: query.book && ch ? `1-${lookup[query.book][ch[0]]}` : ''
-      };
-      // }
+      if (!ch || chap === '0') {
+        queryStr = {
+          ...query,
+          chapter: '',
+          // verseRange: vr && vr[0]
+          verseRange: ''
+        };
+      } else {
+        queryStr = {
+          ...query,
+          chapter:
+            chap && lookup[query.book].hasOwnProperty(chap)
+              ? chap
+              : chapterList[chapterList.length - 1],
+          verseRange:
+            query.book && ch && lookup[query.book].hasOwnProperty(chap)
+              ? `1-${lookup[query.book][chap]}`
+              : `1-${lookup[query.book][chapterList[chapterList.length - 1]]}`
+        };
+      }
 
       setQuery(queryStr);
     }
   };
-
+  console.log('query ···', query);
   const [bible, setBible] = useState(passage.bible || 'ESV');
 
   const handleSearch = () => {
