@@ -20,15 +20,16 @@ module.exports = (req, res, next) => {
       }
     })
     .then(res => {
-      const rawText = res.data.passages[0];
+      const text = res.data.passages[0];
       return Object.fromEntries(
-        rawText
-          .replace(/([[\]])/g, '')
+        text
+          .replace(/[\[]/g, '')
           .replace(/\n\n/g, '')
-          .replace(/\s{2}/g, ' ')
-          .split(/[ ]+(?=\d)/g)
-          .splice(1, rawText.length - 1)
-          .map(el => el.split(/(?<=[0-9])(?=[\D])/))
+          .replace(/^\s{2}/g, ' ')
+          .replace(/(?<=[^\s{2}])\s{2}/g, ' ')
+          .split(/(?<=\s|\W)(?=\d{1,}\])/g)
+          .splice(1, text.length - 1)
+          .map(el => el.split(/\] /g))
       );
     })
     .then(cleanText => {

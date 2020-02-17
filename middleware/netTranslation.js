@@ -14,8 +14,8 @@ module.exports = (req, res, next) => {
   axios
     .get(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
     .then(res => {
-      const rawText = res.data;
-      return Object.fromEntries(rawText.map(el => [[el.verse], el.text]));
+      const text = res.data;
+      return Object.fromEntries(text.map(el => [[el.verse], el.text]));
     })
     .then(cleanText => {
       req.data = {

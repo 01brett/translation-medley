@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
 import Header from './components/Header';
@@ -19,19 +19,26 @@ const App = () => {
     shallowEqual
   );
 
+  const [allV, setAllV] = useState([]);
+
+  useEffect(() => {
+    if (!isFetching) {
+      const split = passage.verseRange.split('-');
+
+      const allV =
+        passage.bible &&
+        content[passage.bible][passage.book][passage.chapter].allVerses;
+
+      const startIndex = allV.indexOf(split[0]);
+      const endIndex = allV.indexOf(split[1]);
+
+      setAllV([...allV.slice(allV[startIndex], allV[endIndex])]);
+    }
+  }, [isFetching, passage, passage.verseRange, content]);
+
+  // console.log('allV ···', allV);
+
   const [verseToSwap, setVerseToSwap] = useState('');
-
-  const allVerses = bible => {
-    return (
-      passage.bible && content[bible][passage.book][passage.chapter].allVerses
-    );
-  };
-
-  const verses = bible => {
-    return (
-      passage.bible && content[bible][passage.book][passage.chapter].verses
-    );
-  };
 
   const position = () => {
     const v = document.querySelector(`#verse-${verseToSwap}`);
@@ -44,7 +51,6 @@ const App = () => {
       left: '50%'
     };
   };
-
   return (
     <>
       {isFetching && <Loading />}
@@ -56,22 +62,33 @@ const App = () => {
           <>
             <PassageHeading />
             <p className="verses">
-              {allVerses(passage.bible).map(num => {
-                const swap = swapped.find(({ verse }) => verse === num);
+              {passage.bible &&
+                content[passage.bible] &&
+                content[passage.bible][passage.book] &&
+                content[passage.bible][passage.book][passage.chapter] &&
+                content[passage.bible][passage.book][
+                  passage.chapter
+                ].allVerses.map(num => {
+                  const verses = bible => {
+                    return (
+                      passage.bible &&
+                      content[bible][passage.book][passage.chapter].verses
+                    );
+                  };
+                  const swap = swapped.find(({ verse }) => verse === num);
+                  const isSwap = swap ? swap.bible : passage.bible;
 
-                const isSwap = swap ? swap.bible : passage.bible;
-
-                return (
-                  <Verse
-                    active={isToggled && num === verseToSwap}
-                    key={num}
-                    verseBible={isSwap}
-                    verseNum={num}
-                    text={verses(isSwap)[num]}
-                    verseToSwap={setVerseToSwap}
-                  />
-                );
-              })}
+                  return (
+                    <Verse
+                      active={isToggled && num === verseToSwap}
+                      key={num}
+                      verseBible={isSwap}
+                      verseNum={num}
+                      text={verses(isSwap)[num]}
+                      verseToSwap={setVerseToSwap}
+                    />
+                  );
+                })}
             </p>
           </>
         )}

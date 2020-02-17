@@ -35,7 +35,7 @@ export default function({ verseNum, verseBible, text, verseToSwap, active }) {
         }
         onClick={handleClick}
       >
-        <span className={active ? 'active' : null}>{text}</span>
+        <span className={active ? 'active' : null}>{text} </span>
       </span>
     </span>
   );

@@ -6,7 +6,6 @@ const morgan = require('morgan');
 const { check } = require('express-validator');
 const validation = require('../middleware/validation');
 const whichTranslation = require('../middleware/whichTranslation');
-const books = require('../middleware/books');
 const app = express.Router();
 
 app.use(cors());
@@ -39,25 +38,15 @@ app.get(
   (req, res) => {
     const { passage, content } = req.data;
 
-    const psgBook = books.reduce((acc, cVal) => {
-      const psgLow = passage.book.toLowerCase();
-      const bkLow = cVal.toLowerCase();
-      if (psgLow === bkLow) {
-        acc = cVal;
-      }
-      return acc;
-    }, '');
-
     const formatted = {
       passage: {
         bible: passage.bible,
-        book: psgBook,
-        chapter: passage.chapter,
-        verseRange: passage.verseRange
+        book: passage.book,
+        chapter: passage.chapter
       },
       content: {
         [passage.bible]: {
-          [psgBook]: {
+          [passage.book]: {
             [passage.chapter]: {
               allVerses: Object.keys(content).map(el => Number(el)),
               verses: content
@@ -67,15 +56,12 @@ app.get(
       }
     };
 
-    if (passage.verseRange) {
-      let allV =
-        formatted.content[passage.bible][passage.book][passage.chapter]
-          .allVerses;
-      if (allV.length > 1) {
-        formatted.passage.verseRange = `${allV[0]}-${allV[allV.length - 1]}`;
-      } else {
-        formatted.passage.verseRange = `${allV[0]}`;
-      }
+    let allV =
+      formatted.content[passage.bible][passage.book][passage.chapter].allVerses;
+    if (allV.length > 1) {
+      formatted.passage.verseRange = `${allV[0]}-${allV[allV.length - 1]}`;
+    } else {
+      formatted.passage.verseRange = `${allV[0]}`;
     }
 
     res.json(formatted);

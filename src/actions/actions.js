@@ -97,14 +97,14 @@ export function getDiffBible(bible) {
         try {
           res = await dispatch(fetchText({ ...passage, bible: bible }));
         } catch (err) {
-          console.log('\ngetDiffBible fetch •••', err, '\n\n');
+          console.log('\ngetDiffBible fetch ···', err, '\n\n');
         }
         dispatch(addContent(res));
         dispatch(setPassage(res.passage));
         dispatch(fetchSuccess());
       }
     } catch (err) {
-      console.log('\ngetDiffBible •••', err, '\n\n');
+      console.log('\ngetDiffBible ···', err, '\n\n');
     }
   };
 }
@@ -118,14 +118,14 @@ export function getDiffVerse(verse) {
         try {
           res = await dispatch(fetchText({ ...passage, bible: verse.bible }));
         } catch (err) {
-          console.log('\ngetDiffVerse fetch •••', err, '\n\n');
+          console.log('\ngetDiffVerse fetch ···', err, '\n\n');
         }
         dispatch(addContent(res));
         dispatch(fetchSuccess());
       }
       dispatch(addVerseSwap(verse));
     } catch (err) {
-      console.log('\ngetDiffVerse •••', err, '\n\n');
+      console.log('\ngetDiffVerse ···', err, '\n\n');
     }
   };
 }
@@ -133,39 +133,35 @@ export function getDiffVerse(verse) {
 export function getDiffPassage(query) {
   return async (dispatch, getState) => {
     const { content, passage, swapped } = getState();
+    // const splitRange = query.verseRange.split('-');
+    // const lastVerse = splitRange[splitRange.length - 1];
     try {
-      if (JSON.stringify(passage) !== JSON.stringify(query)) {
-        const cVrs = query.verseRange.split('-');
-        if (
-          content.hasOwnProperty(query.bible) &&
-          content[query.bible].hasOwnProperty(query.book) &&
-          content[query.bible][query.book].hasOwnProperty(query.chapter)
-          // && content[query.bible][query.book][query.chapter].allVerses.includes(
-          //   cVrs[cVrs.length - 1])
-        ) {
-          dispatch(setPassage({ ...query, bible: query.bible }));
-        } else {
-          let res;
-          try {
-            res = await dispatch(fetchText(query));
-          } catch (err) {
-            console.log('\ngetDiffPassage fetch •••', err, '\n\n');
-          }
-          if (
-            (swapped.length > 0 && passage.book !== res.passage.book) ||
-            (swapped.length > 0 && passage.chapter !== res.passage.chapter)
-          ) {
-            dispatch(clearVerseSwaps());
-          }
-          dispatch(addContent(res));
-          dispatch(setPassage(res.passage));
-          dispatch(fetchSuccess());
-        }
+      if (
+        content.hasOwnProperty(query.bible) &&
+        content[query.bible].hasOwnProperty(query.book) &&
+        content[query.bible][query.book].hasOwnProperty(query.chapter)
+        // && content[query.bible][query.book][query.chapter].verses.hasOwnProperty(lastVerse)
+      ) {
+        dispatch(setPassage({ ...query, bible: query.bible }));
       } else {
-        console.log('Nothing new to fetch or set •••');
+        let res;
+        try {
+          res = await dispatch(fetchText(query));
+        } catch (err) {
+          console.log('\ngetDiffPassage fetch ···', err, '\n\n');
+        }
+        if (
+          (swapped.length > 0 && passage.book !== res.passage.book) ||
+          (swapped.length > 0 && passage.chapter !== res.passage.chapter)
+        ) {
+          dispatch(clearVerseSwaps());
+        }
+        dispatch(addContent(res));
+        dispatch(setPassage(res.passage));
+        dispatch(fetchSuccess());
       }
     } catch (err) {
-      console.log('\ngetDiffPassage •••', err, '\n\n');
+      console.log('\ngetDiffPassage ···', err, '\n\n');
     }
   };
 }

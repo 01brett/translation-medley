@@ -15,11 +15,11 @@ module.exports = (req, res, next) => {
   axios
     .get(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
     .then(res => {
-      const rawText = res.data.text;
+      const text = res.data.text;
       return Object.fromEntries(
-        rawText
+        text
           .split(/\r\n/)
-          .splice(1, rawText.length - 1)
+          .splice(1, text.length - 1)
           .map(el => el.split(/(?<=[0-9])(?=[\D])/))
       );
     })
