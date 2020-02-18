@@ -27,9 +27,7 @@ const Search = () => {
       book.toLowerCase().includes(typed.toLowerCase())
     );
     setFilteredResults(filtered);
-    if (passage.book && passage.chapter && passage.verseRange)
-      setTyped(`${passage.book} ${passage.chapter}:${passage.verseRange}`);
-  }, [typed, passage]);
+  }, [typed]);
 
   const initQ = {
     book: '',
@@ -126,9 +124,17 @@ const Search = () => {
         if (vers) {
           let vSplit = vers.split('-');
           let maxChVerse = lookup[query.book][chap];
-          // console.log('maxChVerse ···', maxChVerse);
-          // console.log('vSplit ···', vSplit);
-          if (vSplit && vSplit[1] === undefined) {
+
+          console.log('chap ···', chap);
+          console.log('vers ···', vers);
+          console.log('maxChVerse ···', maxChVerse);
+          console.log('vSplit[0] ···', vSplit[0]);
+          console.log('vSplit[1] ···', vSplit[1]);
+
+          if (
+            (vSplit && vSplit[1] === undefined) ||
+            (vSplit && vSplit[1] === '')
+          ) {
             let onlyVerse;
             if (vSplit[0] > maxChVerse) {
               onlyVerse = maxChVerse;
@@ -142,24 +148,9 @@ const Search = () => {
               verseRange: onlyVerse
             };
           } else {
-            let firstRange;
-            let lastRange;
-
-            if (vSplit[0] < 1 || vSplit[0] > maxChVerse) {
-              firstRange = '1';
-            } else {
-              firstRange = vSplit[0];
-            }
-
-            if (vSplit[1] < 1 || vSplit[1] > maxChVerse) {
-              lastRange = maxChVerse;
-            } else {
-              lastRange = vSplit[1];
-            }
-
             queryStr = {
               ...query,
-              verseRange: `${firstRange}-${lastRange}`
+              verseRange: vers
             };
           }
         } else {
@@ -176,9 +167,6 @@ const Search = () => {
       setQuery(queryStr);
     }
   };
-
-  // console.log('typed ···', typed);
-  // console.log('query ···', query);
 
   const [bible, setBible] = useState(passage.bible || 'ESV');
 

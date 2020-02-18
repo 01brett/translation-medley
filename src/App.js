@@ -21,6 +21,7 @@ const App = () => {
 
   const [verseToSwap, setVerseToSwap] = useState('');
   const [position, setPosition] = useState({});
+  const [verseRangeDisplay, setVerseRangeDisplay] = useState([]);
 
   useEffect(() => {
     let v, vPos;
@@ -36,7 +37,43 @@ const App = () => {
       left: '50%'
     };
     setPosition(pos);
-  }, [verseToSwap]);
+
+    const verseRange =
+      passage.bible &&
+      content[passage.bible] &&
+      content[passage.bible][passage.book] &&
+      content[passage.bible][passage.book][passage.chapter] &&
+      content[passage.bible][passage.book][passage.chapter].allVerses;
+
+    console.log(verseRange);
+    if (verseRange.length > 1) {
+      if (
+        passage.verseRange !==
+        `${verseRange[0]}-${verseRange[verseRange.length - 1]}`
+      ) {
+        const split = passage.verseRange.split('-');
+        console.log('split ···', split);
+        const sliced = verseRange.slice(
+          verseRange[Number(split[0]) - 2],
+          verseRange[Number(split[1]) - 1]
+        );
+        setVerseRangeDisplay(sliced);
+      } else {
+        setVerseRangeDisplay(verseRange);
+      }
+    } else {
+      if (passage.verseRange === `${verseRange[0]}`) {
+        setVerseRangeDisplay(verseRange);
+      }
+    }
+  }, [
+    verseToSwap,
+    content,
+    passage.bible,
+    passage.book,
+    passage.chapter,
+    passage.verseRange
+  ]);
 
   return (
     <>
@@ -49,33 +86,27 @@ const App = () => {
           <>
             <PassageHeading />
             <p className="verses">
-              {passage.bible &&
-                content[passage.bible] &&
-                content[passage.bible][passage.book] &&
-                content[passage.bible][passage.book][passage.chapter] &&
-                content[passage.bible][passage.book][
-                  passage.chapter
-                ].allVerses.map(num => {
-                  const verses = bible => {
-                    return (
-                      passage.bible &&
-                      content[bible][passage.book][passage.chapter].verses
-                    );
-                  };
-                  const swap = swapped.find(({ verse }) => verse === num);
-                  const isSwap = swap ? swap.bible : passage.bible;
-
+              {verseRangeDisplay.map(num => {
+                const verses = bible => {
                   return (
-                    <Verse
-                      active={isToggled && num === verseToSwap}
-                      key={num}
-                      verseBible={isSwap}
-                      verseNum={num}
-                      text={verses(isSwap)[num]}
-                      verseToSwap={setVerseToSwap}
-                    />
+                    passage.bible &&
+                    content[bible][passage.book][passage.chapter].verses
                   );
-                })}
+                };
+                const swap = swapped.find(({ verse }) => verse === num);
+                const isSwap = swap ? swap.bible : passage.bible;
+
+                return (
+                  <Verse
+                    active={isToggled && num === verseToSwap}
+                    key={num}
+                    verseBible={isSwap}
+                    verseNum={num}
+                    text={verses(isSwap)[num]}
+                    verseToSwap={setVerseToSwap}
+                  />
+                );
+              })}
             </p>
           </>
         )}
