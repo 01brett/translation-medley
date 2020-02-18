@@ -23,12 +23,13 @@ const Search = () => {
   const [activeFlyout, setActiveFlyout] = useState(0);
 
   useEffect(() => {
-    // const typedBook = typed.length > 0 && typed.match(/(^.+)(?=\s\d)/i);
     const filtered = books.filter(book =>
       book.toLowerCase().includes(typed.toLowerCase())
     );
     setFilteredResults(filtered);
-  }, [typed]);
+    if (passage.book && passage.chapter && passage.verseRange)
+      setTyped(`${passage.book} ${passage.chapter}:${passage.verseRange}`);
+  }, [typed, passage]);
 
   const initQ = {
     book: '',
@@ -42,7 +43,7 @@ const Search = () => {
     // User pressed the enter key or right arrow, update the input
     // and close the suggestions
     if (
-      (!query.book && e.keyCode === 13) ||
+      (typed.length > 1 && !query.book && e.keyCode === 13) ||
       (!query.book && e.keyCode === 39)
     ) {
       setTyped(filteredResults[activeFlyout] + ' ');
@@ -52,6 +53,10 @@ const Search = () => {
         book: filteredResults[activeFlyout]
       });
       setShowFlyout(false);
+    }
+    // User pressed enter key and query is all good
+    if (query.book && query.chapter && e.keyCode === 13) {
+      handleSearch();
     }
     // User pressed the up arrow, decrement the index
     else if (e.keyCode === 38) {
@@ -96,41 +101,89 @@ const Search = () => {
       setQuery(initQ);
       setShowFlyout(true);
     } else {
-      const ch = str.match(/(?<=\s|\s*0)([1-9]\d*)/i);
-      // const vr = str.match(/(?<=:)(\d+-?\d+|\d+)/i);
-      const chap = ch ? ch[0] : '';
+      const ch = str.match(/[^\d\w]([1-9]\d{1,2}|[1-9])/i);
+      const chap = ch ? ch[0].replace(/\s/, '') : '';
       const chapterList = Object.keys(lookup[query.book]);
+      const vr = str.match(/^.*:(.*)$/i);
+      const vers = vr ? vr[1].replace(/[^0-9-]*/g, '') : '';
 
       let queryStr;
       if (!ch || chap === '0') {
         queryStr = {
           ...query,
           chapter: '',
-          // verseRange: vr && vr[0]
           verseRange: ''
         };
       } else {
-        queryStr = {
-          ...query,
-          chapter:
-            chap && lookup[query.book].hasOwnProperty(chap)
-              ? chap
-              : chapterList[chapterList.length - 1],
-          verseRange:
-            query.book && ch && lookup[query.book].hasOwnProperty(chap)
-              ? `1-${lookup[query.book][chap]}`
-              : `1-${lookup[query.book][chapterList[chapterList.length - 1]]}`
-        };
-      }
+        let chapt;
 
+        if (chap && lookup[query.book].hasOwnProperty(chap)) {
+          chapt = chap;
+        } else {
+          chapt = chapterList[chapterList.length - 1];
+        }
+
+        if (vers) {
+          let vSplit = vers.split('-');
+          let maxChVerse = lookup[query.book][chap];
+          // console.log('maxChVerse ···', maxChVerse);
+          // console.log('vSplit ···', vSplit);
+          if (vSplit && vSplit[1] === undefined) {
+            let onlyVerse;
+            if (vSplit[0] > maxChVerse) {
+              onlyVerse = maxChVerse;
+            } else if (vSplit[0] < 1) {
+              onlyVerse = '1';
+            } else {
+              onlyVerse = vSplit[0];
+            }
+            queryStr = {
+              ...query,
+              verseRange: onlyVerse
+            };
+          } else {
+            let firstRange;
+            let lastRange;
+
+            if (vSplit[0] < 1 || vSplit[0] > maxChVerse) {
+              firstRange = '1';
+            } else {
+              firstRange = vSplit[0];
+            }
+
+            if (vSplit[1] < 1 || vSplit[1] > maxChVerse) {
+              lastRange = maxChVerse;
+            } else {
+              lastRange = vSplit[1];
+            }
+
+            queryStr = {
+              ...query,
+              verseRange: `${firstRange}-${lastRange}`
+            };
+          }
+        } else {
+          queryStr = {
+            ...query,
+            chapter: chapt,
+            verseRange:
+              query.book && ch && lookup[query.book].hasOwnProperty(chap)
+                ? `1-${lookup[query.book][chap]}`
+                : `1-${lookup[query.book][chapterList[chapterList.length - 1]]}`
+          };
+        }
+      }
       setQuery(queryStr);
     }
   };
+
+  // console.log('typed ···', typed);
+  // console.log('query ···', query);
+
   const [bible, setBible] = useState(passage.bible || 'ESV');
 
   const handleSearch = () => {
     console.log('search query ···', { bible: bible, ...query });
-    setTyped(`${query.book} ${query.chapter}`);
     setShowFlyout(false);
     isToggled && dispatch(hideVerseControls());
     dispatch(getDiffPassage({ bible: bible, ...query }));
@@ -144,8 +197,6 @@ const Search = () => {
           id="search"
           name="search"
           value={typed}
-          // onFocus={() => setShowFlyout(true)}
-          // onBlur={() => setShowFlyout(false)}
           onKeyDown={handleKeyDown}
           onChange={handleChange}
         />

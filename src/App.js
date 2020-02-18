@@ -19,38 +19,25 @@ const App = () => {
     shallowEqual
   );
 
-  const [allV, setAllV] = useState([]);
+  const [verseToSwap, setVerseToSwap] = useState('');
+  const [position, setPosition] = useState({});
 
   useEffect(() => {
-    if (!isFetching) {
-      const split = passage.verseRange.split('-');
-
-      const allV =
-        passage.bible &&
-        content[passage.bible][passage.book][passage.chapter].allVerses;
-
-      const startIndex = allV.indexOf(split[0]);
-      const endIndex = allV.indexOf(split[1]);
-
-      setAllV([...allV.slice(allV[startIndex], allV[endIndex])]);
+    let v, vPos;
+    if (verseToSwap) {
+      v = document.querySelector(`#verse-${verseToSwap}`);
+      vPos = v.getClientRects()[0].top;
     }
-  }, [isFetching, passage, passage.verseRange, content]);
 
-  // console.log('allV ···', allV);
-
-  const [verseToSwap, setVerseToSwap] = useState('');
-
-  const position = () => {
-    const v = document.querySelector(`#verse-${verseToSwap}`);
-    const vPos = v.getClientRects()[v.getClientRects().length - 1].bottom;
-
-    return {
+    const pos = {
       position: 'absolute',
-      top: vPos + 4 + 'px',
+      top: vPos + window.scrollY - 54 + 'px',
       marginLeft: '-15.15rem',
       left: '50%'
     };
-  };
+    setPosition(pos);
+  }, [verseToSwap]);
+
   return (
     <>
       {isFetching && <Loading />}
@@ -94,7 +81,7 @@ const App = () => {
         )}
         {isToggled && (
           <VerseSwapper
-            position={position()}
+            position={position}
             verseNum={verseToSwap}
             verseToSwap={setVerseToSwap}
           />

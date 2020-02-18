@@ -29,7 +29,7 @@ $sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
 .app {
   max-width: 48rem;
   margin: 0 auto;
-  padding: 0 $md;
+  padding: 0 $md $xl;
   color: $black;
   font-family: $serif;
   font-size: 1.15rem;
