@@ -4,16 +4,14 @@ const path = require('path');
 const apiRoute = require('./api/app');
 
 const server = express();
-if (process.env.NODE_ENV === 'production') {
-  server.use(express.static(__dirname));
-  server.use(express.static(path.join(__dirname, 'build')));
-}
 
-server.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+server.use(express.static(path.join(__dirname, 'build')));
 
 server.use('/api', apiRoute);
+
+server.get('*', function(req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 const PORT = process.env.PORT || 3001;
 
