@@ -4,8 +4,9 @@ const path = require('path');
 const apiRoute = require('./api/app');
 
 const server = express();
-
-server.use(express.static(path.join(__dirname, 'build')));
+if (process.env.NODE_ENV === 'production') {
+  server.use(express.static(path.join(__dirname, 'build')));
+}
 
 server.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
