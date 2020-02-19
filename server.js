@@ -1,14 +1,17 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const apiRoute = require('./api/app');
 
 const server = express();
 
-server.use('/api', apiRoute);
+server.use(express.static(path.join(__dirname, 'build')));
 
-server.get('/', (req, res) => {
-  res.json({ message: 'API is running' });
+server.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
+
+server.use('/api', apiRoute);
 
 const PORT = process.env.PORT || 3001;
 
