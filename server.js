@@ -5,6 +5,7 @@ const apiRoute = require('./api/app');
 
 const server = express();
 if (process.env.NODE_ENV === 'production') {
+  server.use(express.static(__dirname));
   server.use(express.static(path.join(__dirname, 'build')));
 }
 
