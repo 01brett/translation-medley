@@ -75,7 +75,9 @@ export function fetchText(passage) {
     }
     try {
       dispatch(fetchStart());
-      const res = await axios.get(`/api/passage/${queryParams}`);
+      const res = await axios.get(
+        `${process.env.REACT_APP_PROXY}/api/passage/${queryParams}`
+      );
       return res.data;
     } catch (error) {
       dispatch(fetchFailure(error));
