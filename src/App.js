@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
-import Header from './components/Header';
 import PassageHeading from './components/PassageHeading';
 import Verse from './components/Verse';
 import VerseSwapper from './components/VerseSwapper';
@@ -79,7 +78,7 @@ const App = () => {
     <>
       {isFetching && <Loading />}
       <div className="app">
-        <Header />
+        <h1>Bible Translation Medley</h1>
         <Search />
         {!passage.bible && <Empty />}
         {passage.book && content[passage.bible][passage.book] && (

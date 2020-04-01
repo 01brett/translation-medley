@@ -1,4 +1,5 @@
 import axios from 'axios';
+import lookup from '../helpers/lookup';
 
 export const FETCH_START = 'FETCH_START';
 export const FETCH_SUCCESS = 'FETCH_SUCCESS';
@@ -65,7 +66,7 @@ export function fetchFailure(error) {
 /////////////////////
 // COMBO FUNCTIONS //
 /////////////////////
-export function fetchText(passage) {
+function _fetchText(passage) {
   return async dispatch => {
     let queryParams;
     if (passage.verseRange) {
@@ -97,7 +98,7 @@ export function getDiffBible(bible) {
       } else {
         let res;
         try {
-          res = await dispatch(fetchText({ ...passage, bible: bible }));
+          res = await dispatch(_fetchText({ ...passage, bible: bible }));
         } catch (err) {
           console.log('\ngetDiffBible fetch ···', err, '\n\n');
         }
@@ -118,7 +119,7 @@ export function getDiffVerse(verse) {
       let res;
       if (!content.hasOwnProperty(verse.bible)) {
         try {
-          res = await dispatch(fetchText({ ...passage, bible: verse.bible }));
+          res = await dispatch(_fetchText({ ...passage, bible: verse.bible }));
         } catch (err) {
           console.log('\ngetDiffVerse fetch ···', err, '\n\n');
         }
@@ -148,7 +149,7 @@ export function getDiffPassage(query) {
       } else {
         let res;
         try {
-          res = await dispatch(fetchText(query));
+          res = await dispatch(_fetchText(query));
         } catch (err) {
           console.log('\ngetDiffPassage fetch ···', err, '\n\n');
         }

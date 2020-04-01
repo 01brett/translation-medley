@@ -34,22 +34,6 @@ const initState = {
     {
       id: 'KJV',
       display: 'King James'
-    },
-    {
-      id: 'ASV',
-      display: 'American Standard'
-    },
-    {
-      id: 'DARBY',
-      display: '1890 Darby'
-    },
-    {
-      id: 'LEB',
-      display: 'Lexham English'
-    },
-    {
-      id: 'YLT',
-      display: `Young's Literal`
     }
   ]
 };
@@ -127,3 +111,21 @@ export default (state = initState, action) => {
       return state;
   }
 };
+
+// Extra Translations
+// {
+//   id: 'ASV',
+//   display: 'American Standard'
+// },
+// {
+//   id: 'DARBY',
+//   display: '1890 Darby'
+// },
+// {
+//   id: 'LEB',
+//   display: 'Lexham English'
+// },
+// {
+//   id: 'YLT',
+//   display: `Young's Literal`
+// }

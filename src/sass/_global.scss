@@ -35,3 +35,9 @@ $sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
   font-size: 1.15rem;
   line-height: 1.5;
 }
+
+h1 {
+  margin: 0 0 $sm;
+  padding-top: $md;
+  text-align: center;
+}
