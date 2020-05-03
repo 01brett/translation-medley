@@ -1,9 +1,4 @@
 {
-  "build": {
-    "env": {
-      "REACT_APP_PROXY": "@medley-api"
-    }
-  },
   "github": {
     "silent": true
   }
