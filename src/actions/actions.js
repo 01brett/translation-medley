@@ -1,5 +1,5 @@
 import axios from 'axios';
-import lookup from '../helpers/lookup';
+// import lookup from '../helpers/lookup';
 
 export const FETCH_START = 'FETCH_START';
 export const FETCH_SUCCESS = 'FETCH_SUCCESS';
@@ -20,13 +20,13 @@ export const HIDE_VERSE_CONTROLS = 'HIDE_VERSE_CONTROLS';
 export function addContent(content) {
   return {
     type: ADD_CONTENT,
-    payload: content
+    payload: content,
   };
 }
 export function setPassage(passage) {
   return {
     type: SET_PASSAGE,
-    payload: passage
+    payload: passage,
   };
 }
 ////////////
@@ -35,7 +35,7 @@ export function setPassage(passage) {
 export function addVerseSwap(verse) {
   return {
     type: ADD_VERSE_SWAP,
-    payload: verse
+    payload: verse,
   };
 }
 export function clearVerseSwaps() {
@@ -59,7 +59,7 @@ export function fetchSuccess() {
 export function fetchFailure(error) {
   return {
     type: FETCH_FAILURE,
-    payload: error
+    payload: error,
   };
 }
 
@@ -67,7 +67,7 @@ export function fetchFailure(error) {
 // COMBO FUNCTIONS //
 /////////////////////
 function _fetchText(passage) {
-  return async dispatch => {
+  return async (dispatch) => {
     let queryParams;
     if (passage.verseRange) {
       queryParams = `?bible=${passage.bible}&book=${passage.book}&chapter=${passage.chapter}&verseRange=${passage.verseRange}`;
@@ -76,9 +76,7 @@ function _fetchText(passage) {
     }
     try {
       dispatch(fetchStart());
-      const res = await axios.get(
-        `${process.env.REACT_APP_PROXY}/api/passage/${queryParams}`
-      );
+      const res = await axios.get(`${process.env.REACT_APP_PROXY}/api/passage/${queryParams}`);
       return res.data;
     } catch (error) {
       dispatch(fetchFailure(error));
@@ -90,10 +88,7 @@ export function getDiffBible(bible) {
   return async (dispatch, getState) => {
     const { content, passage } = getState();
     try {
-      if (
-        content.hasOwnProperty(bible) &&
-        content[bible].hasOwnProperty(passage.book)
-      ) {
+      if (content.hasOwnProperty(bible) && content[bible].hasOwnProperty(passage.book)) {
         dispatch(setPassage({ ...passage, bible: bible }));
       } else {
         let res;
