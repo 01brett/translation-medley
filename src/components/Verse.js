@@ -1,23 +1,23 @@
-import React from 'react';
-import { shallowEqual, useSelector, useDispatch } from 'react-redux';
+import * as React from 'react'
+import { shallowEqual, useSelector, useDispatch } from 'react-redux'
 
-import { showVerseControls } from '../actions/actions';
+import { showVerseControls } from '../actions/actions'
 
-export default function({ verseNum, verseBible, text, verseToSwap, active }) {
+export default function ({ verseNum, verseBible, text, verseToSwap, active }) {
   const { isToggled, passageBible } = useSelector(
-    state => ({
+    (state) => ({
       isToggled: state.isToggled,
       passageBible: state.passage.bible
     }),
     shallowEqual
-  );
+  )
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const handleClick = () => {
-    verseToSwap(verseNum);
-    !isToggled && dispatch(showVerseControls());
-  };
+    verseToSwap(verseNum)
+    !isToggled && dispatch(showVerseControls())
+  }
 
   return (
     <span className="verse" id={`verse-${verseNum}`}>
@@ -38,5 +38,5 @@ export default function({ verseNum, verseBible, text, verseToSwap, active }) {
         <span className={active ? 'active' : null}>{text} </span>
       </span>
     </span>
-  );
+  )
 }

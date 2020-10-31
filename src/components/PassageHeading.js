@@ -1,24 +1,24 @@
-import React from 'react';
-import { shallowEqual, useSelector, useDispatch } from 'react-redux';
+import * as React from 'react'
+import { shallowEqual, useSelector, useDispatch } from 'react-redux'
 
-import { clearVerseSwaps, hideVerseControls } from '../actions/actions';
+import { clearVerseSwaps, hideVerseControls } from '../actions/actions'
 
-export default function() {
+export default function () {
   const { isToggled, passage, swapped } = useSelector(
-    state => ({
+    (state) => ({
       isToggled: state.isToggled,
       passage: state.passage,
       swapped: state.swapped
     }),
     shallowEqual
-  );
+  )
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const clear = () => {
-    isToggled && dispatch(hideVerseControls());
-    dispatch(clearVerseSwaps());
-  };
+    isToggled && dispatch(hideVerseControls())
+    dispatch(clearVerseSwaps())
+  }
 
   return (
     <div className="heading">
@@ -30,5 +30,5 @@ export default function() {
         Clear Swaps
       </button>
     </div>
-  );
+  )
 }
