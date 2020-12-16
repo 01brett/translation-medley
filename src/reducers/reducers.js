@@ -7,110 +7,120 @@ import {
   SHOW_VERSE_CONTROLS,
   HIDE_VERSE_CONTROLS,
   SET_PASSAGE,
-  ADD_CONTENT
-} from '../actions/actions';
+  ADD_CONTENT,
+} from "../actions/actions"
 
 const initState = {
   isToggled: false,
   isFetching: false,
-  error: '',
+  error: "",
   content: {},
   passage: {
-    bible: '',
-    book: '',
-    chapter: '',
-    verseRange: ''
+    bible: "",
+    book: "",
+    chapter: "",
+    verseRange: "",
   },
   swapped: [],
   bibles: [
     {
-      id: 'ESV',
-      display: 'English Standard'
+      id: "ESV",
+      display: "English Standard",
     },
     {
-      id: 'NET',
-      display: 'New English'
+      id: "NET",
+      display: "New English",
     },
     {
-      id: 'KJV',
-      display: 'King James'
-    }
-  ]
-};
+      id: "KJV",
+      display: "King James",
+    },
+  ],
+}
 
 export default (state = initState, action) => {
   switch (action.type) {
-    case FETCH_START:
+    case FETCH_START: {
       return {
         ...state,
-        isFetching: true
-      };
-    case FETCH_SUCCESS:
-      return {
-        ...state,
-        isFetching: false,
-        error: ''
-      };
-    case FETCH_FAILURE:
+        isFetching: true,
+      }
+    }
+    case FETCH_SUCCESS: {
       return {
         ...state,
         isFetching: false,
-        error: action.payload
-      };
-    case CLEAR_VERSE_SWAPS:
+        error: "",
+      }
+    }
+    case FETCH_FAILURE: {
       return {
         ...state,
-        swapped: []
-      };
-    case ADD_VERSE_SWAP:
-      const data = action.payload;
+        isFetching: false,
+        error: action.payload,
+      }
+    }
+    case CLEAR_VERSE_SWAPS: {
+      return {
+        ...state,
+        swapped: [],
+      }
+    }
+    case ADD_VERSE_SWAP: {
+      const data = action.payload
       if (state.swapped.find(({ verse }) => verse === data.verse)) {
         return {
           ...state,
           swapped: [
-            ...state.swapped.map(swap =>
+            ...state.swapped.map((swap) =>
               swap.verse === data.verse ? data : swap
-            )
-          ]
-        };
+            ),
+          ],
+        }
       } else {
         return {
           ...state,
-          swapped: [...state.swapped, data]
-        };
+          swapped: [...state.swapped, data],
+        }
       }
-    case SHOW_VERSE_CONTROLS:
+    }
+    case SHOW_VERSE_CONTROLS: {
       return {
         ...state,
-        isToggled: true
-      };
-    case HIDE_VERSE_CONTROLS:
+        isToggled: true,
+      }
+    }
+    case HIDE_VERSE_CONTROLS: {
       return {
         ...state,
-        isToggled: false
-      };
-    case ADD_CONTENT:
-      const psg = action.payload.passage;
-      const cnt = action.payload.content;
+        isToggled: false,
+      }
+    }
+    case ADD_CONTENT: {
+      const psg = action.payload.passage
+      const cnt = action.payload.content
       return {
         ...state,
         content: {
           ...state.content,
           [psg.bible]: {
             ...state.content[psg.bible],
-            ...cnt[psg.bible]
-          }
-        }
-      };
-    case SET_PASSAGE:
+            ...cnt[psg.bible],
+          },
+        },
+      }
+    }
+    case SET_PASSAGE: {
       return {
         ...state,
-        passage: action.payload
-      };
-    default:
-      return state;
+        passage: action.payload,
+      }
+    }
+    default: {
+      return state
+    }
   }
-};
+}
 
 // Extra Translations
 // {
